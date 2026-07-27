@@ -1,0 +1,25 @@
+platform: line
+purpose: business
+name: solo-empire
+display_name: Solo Empire Official Account
+account_type: official_account
+status: planned
+
+# The account can be linked to these system areas after setup.
+related_ventures: []
+related_projects: []
+
+capabilities:
+  messaging_api: planned
+  webhook: planned
+  mcp: planned
+  rich_menus: planned
+
+# Secret values are resolved outside the repository.
+credential_refs:
+  channel_access_token: LINE_SOLO_EMPIRE_CHANNEL_ACCESS_TOKEN
+  webhook_secret: LINE_SOLO_EMPIRE_WEBHOOK_SECRET
+
+webhook:
+  routing_owner: central-line-router
+  url_ref: LINE_SOLO_EMPIRE_WEBHOOK_URL
