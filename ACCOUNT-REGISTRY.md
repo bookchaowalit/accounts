@@ -195,8 +195,8 @@ Templates:
 
 ## Source documents
 
-- [Social media plan](../domains/marketing/growth/book-marketing/social-media-plan.md)
-- [Niche account strategy](../domains/marketing/growth/book-marketing/niche-account-strategy.md)
+- [Social media plan](../projects/marketing/growth/book-marketing/social-media-plan.md)
+- [Niche account strategy](../projects/marketing/growth/book-marketing/niche-account-strategy.md)
 - [Account profile standard](./ACCOUNT-PROFILE-STANDARD.md)
 - [Activation playbook](./ACTIVATION-PLAYBOOK.md)
 - [Account matrix](./ACCOUNT-MATRIX.yaml)
