@@ -1,0 +1,64 @@
+identity_layer: faceless-brand
+family_id: ai-for-thai
+platform: tiktok
+purpose: brand
+name: ai-for-thai
+status: planned
+face_visible: false
+privacy: public
+display_name: AI for Thai
+handle: ai.for.thai
+public_url: ""
+profile_photo_ref: ai-for-thai-logo
+bio: |
+  AI สำหรับ SME ไทย
+  ใช้ได้จริง · สั้น · ชัด
+  Screen + checklist content
+  ลิงก์ในไบโอ / LINE
+topic: Practical AI for Thai businesses
+content_pillars:
+  - Practical AI tools Thai SMEs can use this week
+  - Before/after workflow automation
+  - Short tutorials and checklists
+  - Case-style lessons without client secrets
+cta:
+  label: แอด LINE ปรึกษา AI
+  target_type: line_oa
+  target_ref: solo-empire
+  notes: Prefer landing page or email capture in link when available.
+posting_frequency: 5x/week once launched
+related_ventures:
+  - docs/opportunities/business/ai-services
+related_projects: []
+conversion_path:
+  - tiktok
+  - landing_page_or_email
+  - line_oa
+  - ai_service_offer
+launch_priority: 3
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - followers
+    - engagement
+    - leads
+    - sales
+  log_path: ""
+verification:
+  ownership_confirmed: false
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence: []
+  blockers:
+    - Reserve handle matching Instagram family when possible.
+    - Faceless screen-recording / B-roll style only for launch.
+notes: >-
+  First faceless brand to launch. Non-secret metadata only; store credentials
+  outside this repository.

@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: law-student-th
+platform: tiktok
+purpose: brand
+name: law-student-th
+status: planned
+face_visible: false
+privacy: public
+display_name: law-student-th
+topic: Law study and exam preparation
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

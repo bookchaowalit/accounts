@@ -32,3 +32,21 @@ credentials, or user IDs that identify real people.
 
 `planned` — account structure created; LINE account, Messaging API channel,
 webhook, and MCP configuration still require setup and verification.
+
+## Role in the first conversion path
+
+```text
+LinkedIn / AI for Thai
+        ↓
+Landing page or email
+        ↓
+LINE OA (this account)
+        ↓
+AI service / product offer
+```
+
+This Official Account is the conversation step for `ai-for-thai` leads. Keep
+private human chat on the personal LINE identity. Profile fields and
+verification flags live in [`account.yaml`](./account.yaml). Use
+[`templates/accounts/VERIFICATION-CHECKLIST.md`](../../../../templates/accounts/VERIFICATION-CHECKLIST.md)
+when activating.

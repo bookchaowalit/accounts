@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: ai-sme-page
+platform: facebook
+purpose: business
+name: ai-sme-page
+status: needs-verification
+face_visible: false
+privacy: public
+display_name: ai-sme-page
+topic: AI SME business page; map to a named brand after live handle verification
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

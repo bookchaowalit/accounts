@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: pixiu-watch
+platform: fastwork
+purpose: business
+name: pixiu-watch
+status: active
+face_visible: false
+privacy: public
+display_name: pixiu-watch
+topic: Thai-market SEO service sales
+related_ventures: [freelance-seo]
+notes: Non-secret metadata only; store credentials outside this repository.
+

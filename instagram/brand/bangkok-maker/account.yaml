@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: bangkok-maker
+platform: instagram
+purpose: brand
+name: bangkok-maker
+status: planned
+face_visible: false
+privacy: public
+display_name: bangkok-maker
+topic: Bangkok creative and maker culture
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

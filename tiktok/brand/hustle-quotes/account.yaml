@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: hustle-quotes
+platform: tiktok
+purpose: brand
+name: hustle-quotes
+status: planned
+face_visible: false
+privacy: public
+display_name: hustle-quotes
+topic: Entrepreneur quote products
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

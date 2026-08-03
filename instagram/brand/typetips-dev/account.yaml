@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: typetips-dev
+platform: instagram
+purpose: brand
+name: typetips-dev
+status: planned
+face_visible: false
+privacy: public
+display_name: typetips-dev
+topic: TypeScript and JavaScript education
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

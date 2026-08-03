@@ -1,0 +1,55 @@
+identity_layer: public-personal
+family_id: bookchaowalit-public
+platform: github
+purpose: personal
+name: bookchaowalit
+status: active
+face_visible: true
+privacy: public
+display_name: bookchaowalit
+handle: bookchaowalit
+public_url: https://github.com/bookchaowalit
+profile_photo_ref: bookchaowalit-public-headshot
+bio: |
+  Full-stack developer and system architect.
+  AI systems, automation, and product experiments.
+topic: Open-source work and technical proof
+content_pillars:
+  - AI and software development
+  - Building products and the Solo Empire journey
+  - Technical proof and portfolio repositories
+cta:
+  label: Profile README / website
+  target_type: website
+  target_ref: ""
+  notes: Keep profile README aligned with public personal positioning.
+posting_frequency: as-needed (ships and profile updates)
+related_ventures: []
+related_projects: []
+conversion_path:
+  - github
+  - website
+  - linkedin_or_email
+launch_priority: 2
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - followers
+    - engagement
+  log_path: ""
+verification:
+  ownership_confirmed: true
+  handle_reserved: true
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence:
+    - docs/PERSONAL-DATA-POLICY.md
+  blockers:
+    - Confirm profile README, photo, and pinned repos match public family story.
+notes: Non-secret metadata only; store credentials outside this repository.

@@ -1,0 +1,65 @@
+identity_layer: public-personal
+family_id: bookchaowalit-public
+platform: linkedin
+purpose: personal
+name: bookchaowalit
+status: active
+face_visible: true
+privacy: public
+display_name: Chaowalit Greepoke (Book)
+handle: chaowalit-greepoke-b687351a0
+public_url: https://www.linkedin.com/in/chaowalit-greepoke-b687351a0
+profile_photo_ref: bookchaowalit-public-headshot
+bio: |
+  Full-Stack Developer & System Architect | AI systems, RAG, automation
+  Building products and Solo Empire from Bangkok.
+  Open to AI service work for Thai SMEs and software collaboration.
+topic: AI, software development, SEO, business building, and professional networking
+content_pillars:
+  - AI and software development
+  - Building products and the Solo Empire journey
+  - Knowledge, productivity, and systems
+  - Personal finance education without individualized advice
+cta:
+  label: Contact for AI / software work
+  target_type: website
+  target_ref: ""
+  notes: Prefer routing AI-SME leads toward ai-for-thai conversion path when that funnel is live.
+posting_frequency: 3x/week
+related_ventures:
+  - docs/opportunities/business/ai-services
+related_projects: []
+conversion_path:
+  - linkedin
+  - landing_page_or_email
+  - line_oa
+  - ai_service_offer
+launch_priority: 2
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - followers
+    - engagement
+    - leads
+    - sales
+  log_path: ""
+verification:
+  ownership_confirmed: true
+  handle_reserved: true
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence:
+    - docs/PERSONAL-DATA-POLICY.md
+    - dashboard/TOOLS-REGISTRY.md
+  blockers:
+    - Optimize headline, about, featured CTA, and photo against family standard.
+    - Confirm credentials remain only in password manager / env.
+notes: >-
+  Primary professional channel for bookchaowalit-public. Non-secret metadata
+  only; store credentials outside this repository.

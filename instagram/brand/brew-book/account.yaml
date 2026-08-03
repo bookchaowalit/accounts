@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: brew-book
+platform: instagram
+purpose: brand
+name: brew-book
+status: planned
+face_visible: false
+privacy: public
+display_name: brew-book
+topic: Drink recipes and future drink-shop brand
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

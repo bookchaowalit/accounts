@@ -1,13 +1,47 @@
+identity_layer: faceless-brand
+family_id: solo-empire
 platform: line
 purpose: business
 name: solo-empire
 display_name: Solo Empire Official Account
 account_type: official_account
 status: planned
-
-# The account can be linked to these system areas after setup.
-related_ventures: []
+face_visible: false
+privacy: public
+handle: ""
+public_url: ""
+profile_photo_ref: solo-empire-oa-logo
+bio: |
+  Solo Empire business LINE.
+  AI service intake, customer routing, and approved automation.
+  Not for private personal chat.
+topic: Business automation, customer routing, and AI service intake
+content_pillars:
+  - Lead intake and qualification
+  - AI service offer follow-up
+  - Operational notifications (approved recipients only)
+cta:
+  label: Start AI consultation
+  target_type: none
+  target_ref: ai_service_offer
+  notes: This OA is the conversation step after landing page or email capture.
+posting_frequency: conversation-driven
+related_ventures:
+  - docs/opportunities/business/ai-services
 related_projects: []
+conversion_path:
+  - linkedin_or_social
+  - landing_page_or_email
+  - line_oa
+  - ai_service_offer
+launch_priority: 3
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - leads
+    - sales
+  log_path: ""
 
 capabilities:
   messaging_api: planned
@@ -15,7 +49,6 @@ capabilities:
   mcp: planned
   rich_menus: planned
 
-# Secret values are resolved outside the repository.
 credential_refs:
   channel_access_token: LINE_SOLO_EMPIRE_CHANNEL_ACCESS_TOKEN
   webhook_secret: LINE_SOLO_EMPIRE_WEBHOOK_SECRET
@@ -23,3 +56,22 @@ credential_refs:
 webhook:
   routing_owner: central-line-router
   url_ref: LINE_SOLO_EMPIRE_WEBHOOK_URL
+
+verification:
+  ownership_confirmed: false
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence: []
+  blockers:
+    - Create/configure Official Account and Messaging API channel.
+    - Store tokens only as env vars named in credential_refs.
+    - Publish public add-friend entry for ai-for-thai CTA when ready.
+notes: >-
+  Conversion-path conversation layer for AI for Thai and other approved
+  business offers. Non-secret metadata only.

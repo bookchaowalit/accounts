@@ -1,0 +1,13 @@
+identity_layer: anonymous
+family_id: nexadrift
+platform: x
+purpose: anonymous
+name: nexadrift
+status: planned
+face_visible: false
+privacy: anonymous
+display_name: nexadrift
+topic: Experimental memes and shitposting
+related_ventures: []
+notes: Strictly isolate email, recovery identity, device/session, payment method, and cross-links.
+

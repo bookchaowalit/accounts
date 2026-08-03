@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: sketch-daily
+platform: tiktok
+purpose: brand
+name: sketch-daily
+status: planned
+face_visible: false
+privacy: public
+display_name: sketch-daily
+topic: Daily sketches and art challenges
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

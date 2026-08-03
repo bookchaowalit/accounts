@@ -1,0 +1,13 @@
+identity_layer: anonymous
+family_id: hollowtide
+platform: x
+purpose: anonymous
+name: hollowtide
+status: planned
+face_visible: false
+privacy: anonymous
+display_name: hollowtide
+topic: Private thoughts and venting
+related_ventures: []
+notes: Strictly isolate email, recovery identity, device/session, payment method, and cross-links.
+

@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: hustle-solo
+platform: x
+purpose: brand
+name: hustle-solo
+status: planned
+face_visible: false
+privacy: public
+display_name: hustle-solo
+topic: Solo business lessons and digital products
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

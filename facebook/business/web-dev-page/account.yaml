@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: web-dev-page
+platform: facebook
+purpose: business
+name: web-dev-page
+status: needs-verification
+face_visible: false
+privacy: public
+display_name: web-dev-page
+topic: Web development business page; map to a named brand after live handle verification
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

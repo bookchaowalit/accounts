@@ -22,6 +22,20 @@ accounts/line/game/game-brand/
 Use the platform as the first level, then the primary purpose or audience,
 then a stable human-readable account name.
 
+## Identity model
+
+Solo Empire uses three identity layers:
+
+1. `private-personal` — real-life relationships and private communication.
+2. `public-personal` — the visible `bookchaowalit` identity for technology,
+   AI, business-building, general knowledge, and finance education.
+3. `faceless-brand` — public niche or venture accounts that use a brand,
+   logo, screen recording, hands, or product visuals instead of a face.
+
+Optional anonymous identities are tracked separately and must never share
+emails, profile details, payment methods, devices, or cross-links with the
+public identities.
+
 ## Boundaries
 
 - `accounts/` contains account metadata, documentation, workflows, and
@@ -36,7 +50,51 @@ then a stable human-readable account name.
   workflows. Record those relationships in the account README or structured
   registry metadata instead of duplicating the account folder.
 
+## Registry files
+
+- [`ACCOUNT-REGISTRY.md`](./ACCOUNT-REGISTRY.md) — human-readable inventory,
+  lifecycle, and operating rules.
+- [`ACCOUNT-MATRIX.yaml`](./ACCOUNT-MATRIX.yaml) — structured account-family
+  and platform matrix for future automation.
+- [`ACCOUNT-FOLDER-MAP.md`](./ACCOUNT-FOLDER-MAP.md) — concrete folder-by-folder
+  inventory for every platform identity.
+- [`ACCOUNT-PROFILE-STANDARD.md`](./ACCOUNT-PROFILE-STANDARD.md) — required
+  profile fields, privacy rules, and completeness criteria.
+- [`ACTIVATION-PLAYBOOK.md`](./ACTIVATION-PLAYBOOK.md) — verify/activate order
+  and the single conversion path for the first brand launch.
+
+## Profile template and verification
+
+Do not create more folders to make progress. Verify and activate existing
+ones using:
+
+| Artifact | Path |
+|---|---|
+| Profile schema template | [`templates/accounts/account.yaml`](../templates/accounts/account.yaml) |
+| Verification checklist | [`templates/accounts/VERIFICATION-CHECKLIST.md`](../templates/accounts/VERIFICATION-CHECKLIST.md) |
+| 30-day metrics log | [`templates/accounts/30-DAY-METRICS.md`](../templates/accounts/30-DAY-METRICS.md) |
+
+Every active or in-progress public account should record: public URL/handle,
+status, bio, content pillars, CTA, related venture, and posting frequency.
+Private personal accounts record status and verification flags only — never
+private handles or credentials.
+
+## Activation order (summary)
+
+1. Verify `bookchaowalit-private` (keep private; no private data in Git).
+2. Complete `bookchaowalit-public` starting with LinkedIn; reserve IG, TikTok, X, YouTube with the same name/photo/bio family.
+3. Launch only one faceless brand first: `ai-for-thai`.
+4. Conversion path: LinkedIn / AI for Thai → landing page or email → LINE OA → AI offer.
+5. Publish 30 days; track followers, engagement, leads, sales.
+
+Details: [`ACTIVATION-PLAYBOOK.md`](./ACTIVATION-PLAYBOOK.md).
+
 ## Registry
 
 See [`ACCOUNT-REGISTRY.md`](./ACCOUNT-REGISTRY.md) for the current account
-inventory and lifecycle status.
+inventory and lifecycle status. When operating a specific platform, open its
+dedicated folder from [`ACCOUNT-FOLDER-MAP.md`](./ACCOUNT-FOLDER-MAP.md).
+
+The matrix records planned identities as planned; it does not claim that an
+external account has been created or verified. Credentials and exact private
+identifiers remain outside this repository.
