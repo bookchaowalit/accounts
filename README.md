@@ -2,12 +2,16 @@
 
 This directory is the account and identity registry for external platforms.
 It describes how each account is used, what it is connected to, and where its
-operating instructions live.
+operating instructions live. Cloud and hosted software accounts also use a
+cost-lane classification under [`cloud/`](./cloud/): `free/` and `paid/`.
 
 ## Directory convention
 
 ```text
 accounts/{platform}/{purpose}/{account-name}/
+
+# Cloud provider cost-lane metadata:
+accounts/cloud/{free,paid}/{provider-account}/
 ```
 
 Examples:
@@ -40,6 +44,10 @@ public identities.
 
 - `accounts/` contains account metadata, documentation, workflows, and
   non-secret references.
+- `accounts/cloud/free/` contains metadata for free-forever/free-quota
+  accounts. `accounts/cloud/paid/` contains metadata for billing-enabled,
+  trial-credit, or intentionally paid accounts. These are cost lanes, not new
+  root BUs and not proof that an external account exists.
 - Reusable API, webhook, synchronization, and MCP implementation belongs in
   `infra/` or the appropriate integration documentation under `docs/`.
 - API keys, channel access tokens, OAuth credentials, cookies, and private
@@ -49,6 +57,10 @@ public identities.
 - One account may be related to one or more ventures, projects, or content
   workflows. Record those relationships in the account README or structured
   registry metadata instead of duplicating the account folder.
+
+Cloud cost lanes are deliberately separate from implementation: policies live
+in `docs/`, adapters and preflight live in `infra/`, and secrets stay in the
+configured secret manager or CI secret store.
 
 ## Registry files
 

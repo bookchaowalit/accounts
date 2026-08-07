@@ -5,6 +5,10 @@ identity has its own folder and `account.yaml`. Planned folders are
 placeholders for future account reservation or creation; they do not prove
 that the external account exists.
 
+Cloud cost-lane directories are classification boundaries, not platform
+identities. See [`cloud/README.md`](./cloud/README.md),
+[`cloud/free/`](./cloud/free/), and [`cloud/paid/`](./cloud/paid/).
+
 | Folder | Identity layer | Family | Status |
 |---|---|---|---|
 | [`line/business/solo-empire/`](./line/business/solo-empire/) | `faceless-brand` | `solo-empire` | `planned` |
