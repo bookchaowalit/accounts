@@ -137,7 +137,7 @@ conversion_path:
   - ai_service_offer
 posting_frequency: 5x/week
 related_ventures:
-  - docs/opportunities/business/ai-services
+  - opportunities/business/ai-services
 ```
 
 ## When to update registry files

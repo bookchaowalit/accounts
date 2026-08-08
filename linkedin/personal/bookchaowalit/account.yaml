@@ -27,7 +27,7 @@ cta:
   notes: Prefer routing AI-SME leads toward ai-for-thai conversion path when that funnel is live.
 posting_frequency: 3x/week
 related_ventures:
-  - docs/opportunities/business/ai-services
+  - opportunities/business/ai-services
 related_projects: []
 conversion_path:
   - linkedin

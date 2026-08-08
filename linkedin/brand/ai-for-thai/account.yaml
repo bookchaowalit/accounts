@@ -27,7 +27,7 @@ cta:
   notes: Prefer landing page or email capture first when available; LINE OA is the conversation step.
 posting_frequency: 3-5x/week once launched
 related_ventures:
-  - docs/opportunities/business/ai-services
+  - opportunities/business/ai-services
 related_projects: []
 conversion_path:
   - linkedin

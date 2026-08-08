@@ -147,7 +147,7 @@ faceless_brands:
     topic: Practical AI for Thai businesses
     launch_priority: 1
     related_ventures:
-      - docs/opportunities/business/ai-services
+      - opportunities/business/ai-services
     conversion_path:
       - linkedin
       - landing_page_or_email

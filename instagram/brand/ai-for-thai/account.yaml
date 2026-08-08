@@ -28,7 +28,7 @@ cta:
   notes: Link-in-bio should hit landing page or email first when available.
 posting_frequency: 5x/week once launched
 related_ventures:
-  - docs/opportunities/business/ai-services
+  - opportunities/business/ai-services
 related_projects: []
 conversion_path:
   - instagram

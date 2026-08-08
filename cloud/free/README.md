@@ -5,7 +5,7 @@ free-forever or free-quota plan.
 
 Examples include free/quota Cloudflare, GitHub, Neon, Firebase Spark,
 MongoDB Atlas M0, Netlify Free, Grafana Cloud Free, and similar lanes listed in
-the [Free Cloud/SaaS Catalog](../../../docs/systems/free-cloud-saas-catalog.md).
+the [Free Cloud/SaaS Catalog](../../../systems/free-cloud-saas-catalog.md).
 
 Each provider account record should document:
 
@@ -35,4 +35,4 @@ Cloudflare account has the `solo-empire-portfolio` bucket and an active R2 Data
 Catalog; S3 access keys and catalog credentials remain outside the repository.
 
 Activation requires an operator-owned R2 prefix, scoped credentials, and the
-preflight/rollback steps in [`FREE-CLOUD-E2E-RUNBOOK`](../../../docs/operations/FREE-CLOUD-E2E-RUNBOOK.md).
+preflight/rollback steps in [`FREE-CLOUD-E2E-RUNBOOK`](../../../operations/FREE-CLOUD-E2E-RUNBOOK.md).

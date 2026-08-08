@@ -85,7 +85,7 @@ Supporting accounts:
 | Attention | `linkedin/brand/ai-for-thai` (+ optional personal LinkedIn) | Public education and trust |
 | Capture | Landing page or email list | Public URL only in yaml |
 | Conversation | `line/business/solo-empire` | Business OA, not private LINE |
-| Offer | AI services venture | See `docs/opportunities/business/ai-services/` |
+| Offer | AI services venture | See `opportunities/business/ai-services/` |
 
 Every `ai-for-thai` profile CTA should point to the next step in this path,
 not to a second brand or a private channel.

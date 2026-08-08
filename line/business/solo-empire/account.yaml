@@ -27,7 +27,7 @@ cta:
   notes: This OA is the conversation step after landing page or email capture.
 posting_frequency: conversation-driven
 related_ventures:
-  - docs/opportunities/business/ai-services
+  - opportunities/business/ai-services
 related_projects: []
 conversion_path:
   - linkedin_or_social
