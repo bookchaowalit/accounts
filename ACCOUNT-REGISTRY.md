@@ -18,14 +18,16 @@ private personal
 ├── private social life
 └── never used as a marketing audience
 
-public personal: @bookchaowalit
-├── face-visible identity
+official identity anchor: @bookchaowalit
+├── face-visible profile and real human voice
 ├── AI, technology, building businesses, knowledge, finance education
+├── calm, analytical, structured voice; not entertainment-first
 └── LinkedIn is the primary professional channel
 
 faceless brands
 ├── one focused topic and audience per brand
-├── logo, screen recording, hands, products, or illustrations
+├── no face; use screen recording, hands, products, illustrations, or voice-over
+├── distinct editorial/audio voice per profile
 └── connected to a venture only when the venture is ready
 
 optional anonymous identities
@@ -48,9 +50,33 @@ must stay in the password manager or platform settings, not in this registry.
 | Family | Face | Platforms | Status | Purpose |
 |---|---:|---|---|---|
 | `bookchaowalit-public` | yes | LinkedIn | active | Professional authority, AI services, SEO, software development |
-| `bookchaowalit-public` | yes | Instagram, TikTok, X, Facebook | planned | General technology, knowledge, building-in-public, and personal finance education |
-| `bookchaowalit-public` | yes | YouTube | planned | Long-form AI and technology explanations |
-| `bookchaowalit-public` | yes | GitHub, personal website | active | Technical proof and portfolio |
+| `bookchaowalit-public` | no | Instagram, TikTok, X, Facebook | planned | Faceless distribution for technology, knowledge, building-in-public, and personal finance education |
+| `bookchaowalit-public` | no | YouTube | planned | Faceless long-form AI and technology explanations |
+| `bookchaowalit-public` | no | GitHub, personal website | active | Technical proof and portfolio; official identity remains traceable |
+
+The face-visible rule applies to the official `@bookchaowalit` profile, not to
+every post or every channel. Other profiles may use a different format and
+audio/editorial voice while remaining honest about ownership and provenance.
+
+The official profile should not be optimized around forced extroversion or
+constant humor. It can show personality through thoughtful explanations,
+experiments, progress, relationships, and occasional natural humor.
+
+### Voice architecture
+
+Each profile may have its own **brand voice**—vocabulary, pacing, tone, sound
+design, and narration style—to make the audience and topic distinct:
+
+- `@bookchaowalit`: natural voice, face-visible, personal authority and direct
+  accountability.
+- Faceless brands: topic-specific voice-over, text, or synthetic narration with
+  a consistent style and no face requirement.
+- Every account must retain an internal owner/venture mapping; a different
+  voice is a brand device, not a claim that a different human owns the account.
+
+Do not clone or imitate another real person's voice without permission. If
+synthetic or materially voice-transformed narration is used, disclose it when
+that fact matters to audience trust or platform rules.
 
 Public content pillars:
 
