@@ -26,7 +26,7 @@ numbers, or private identifiers in this directory.
 
 | Need | Canonical owner |
 |---|---|
-| Provider policy and free/paid catalog | `systems/free-cloud-saas-catalog.md` |
+| Provider policy and free/paid catalog | `systems/cloud-platform/free-cloud-saas-catalog.md` |
 | Hosted integration environment names and preflight | `infra/scripts/data_lake/hosted_integrations.py` |
 | Deployment/configuration code | `infra/` or the owning product repository |
 | Secret values and machine credentials | Infisical/Vault/ignored environment/CI secrets |
@@ -44,4 +44,4 @@ See:
 - [`free/README.md`](./free/README.md)
 - [`paid/README.md`](./paid/README.md)
 - [`BU Operating Model`](../../docs/BU-OPERATING-MODEL.md)
-- [`Free Cloud/SaaS Catalog`](../../systems/free-cloud-saas-catalog.md)
+- [`Free Cloud/SaaS Catalog`](../../systems/cloud-platform/free-cloud-saas-catalog.md)
