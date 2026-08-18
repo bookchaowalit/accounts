@@ -43,5 +43,5 @@ See:
 
 - [`free/README.md`](./free/README.md)
 - [`paid/README.md`](./paid/README.md)
-- [`BU Operating Model`](../../docs/BU-OPERATING-MODEL.md)
+- [`BU Operating Model`](../../docs/governance/BU-OPERATING-MODEL.md)
 - [`Free Cloud/SaaS Catalog`](../../systems/cloud-platform/free-cloud-saas-catalog.md)

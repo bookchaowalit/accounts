@@ -55,7 +55,7 @@ verification:
   last_verified_at: ""
   verified_by: ""
   evidence:
-    - docs/PERSONAL-DATA-POLICY.md
+    - docs/governance/PERSONAL-DATA-POLICY.md
     - dashboard/TOOLS-REGISTRY.md
   blockers:
     - Optimize headline, about, featured CTA, and photo against family standard.

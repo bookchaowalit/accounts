@@ -46,7 +46,7 @@ identity_layers:
         purpose: personal
         name: bookchaowalit
         status: active
-        evidence: docs/PERSONAL-DATA-POLICY.md; dashboard/TOOLS-REGISTRY.md
+        evidence: docs/governance/PERSONAL-DATA-POLICY.md; dashboard/TOOLS-REGISTRY.md
       - platform: instagram
         purpose: personal
         name: bookchaowalit

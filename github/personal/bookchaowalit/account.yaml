@@ -49,7 +49,7 @@ verification:
   last_verified_at: ""
   verified_by: ""
   evidence:
-    - docs/PERSONAL-DATA-POLICY.md
+    - docs/governance/PERSONAL-DATA-POLICY.md
   blockers:
     - Confirm profile README, photo, and pinned repos match public family story.
 notes: Non-secret metadata only; store credentials outside this repository.

@@ -49,7 +49,7 @@ verification:
   last_verified_at: ""
   verified_by: ""
   evidence:
-    - docs/PERSONAL-DATA-POLICY.md
+    - docs/governance/PERSONAL-DATA-POLICY.md
   blockers:
     - Confirm canonical public website URL and contact CTA.
 notes: Non-secret metadata only; store credentials outside this repository.
