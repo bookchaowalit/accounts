@@ -5,6 +5,7 @@ port: 3470
 env_prefix: ACCOUNTS_API_
 contract: contracts/accounts.v1.md
 health: /health
+dependencies: [packages/service-auth]
 data:
   owner: solo-empire-account-matrix
   reads: [accounts/ACCOUNT-MATRIX.yaml]

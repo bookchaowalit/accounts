@@ -11,16 +11,15 @@ Run locally from the repository root with::
     python3 services/accounts-api/server.py
 
 Set ``ACCOUNTS_API_MATRIX_PATH`` to use another matrix and
-``ACCOUNTS_API_TOKEN`` before exposing the service outside local development.
+the ``ACCOUNTS_API_AUTH_*`` policy before exposing the service outside local development.
 """
 
 from __future__ import annotations
 
 import argparse
-import ipaddress
+import hashlib
 import json
 import os
-import secrets
 from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -30,6 +29,8 @@ from pathlib import Path
 from threading import RLock
 from typing import Any, Mapping
 from urllib.parse import parse_qs, urlsplit
+
+from service_auth import AuthError, AuthPolicy, check_read_auth, is_loopback, readiness
 
 import yaml
 
@@ -130,13 +131,29 @@ def project_matrix(matrix: Mapping[str, Any]) -> tuple[list[dict[str, Any]], lis
         rows.extend(account_row(group, item) for item in existing)
 
     anonymous = matrix.get("anonymous_identities") or {}
-    anonymous_accounts = anonymous.get("accounts") or []
-    anonymous_summary = {
-        "isolation_required": bool(anonymous.get("isolation_required", True)),
-        "identities": len(anonymous_accounts),
-        "platform_slots": sum(len(item.get("platforms") or []) for item in anonymous_accounts),
-        "by_status": counts(text(item.get("status"), 40) or "unknown" for item in anonymous_accounts),
-    }
+    if "aggregate" in anonymous:
+        aggregate = anonymous["aggregate"]
+        if (not isinstance(aggregate, dict) or
+                any(type(aggregate.get(field)) is not int or aggregate[field] < 0
+                    for field in ("identities", "platform_slots")) or
+                not isinstance(aggregate.get("by_status"), list) or
+                any(not isinstance(item, dict) or not isinstance(item.get("value"), str) or
+                    type(item.get("count")) is not int or item["count"] < 0 for item in aggregate["by_status"])):
+            raise ValueError("anonymous aggregate requires counts and status totals")
+        anonymous_summary = {
+            "isolation_required": bool(anonymous.get("isolation_required", True)),
+            "identities": aggregate["identities"], "platform_slots": aggregate["platform_slots"],
+            "by_status": [{"value": text(item["value"], 40) or "unknown", "count": item["count"]}
+                          for item in aggregate["by_status"]],
+        }
+    else:
+        anonymous_accounts = anonymous.get("accounts") or []
+        anonymous_summary = {
+            "isolation_required": bool(anonymous.get("isolation_required", True)),
+            "identities": len(anonymous_accounts),
+            "platform_slots": sum(len(item.get("platforms") or []) for item in anonymous_accounts),
+            "by_status": counts(text(item.get("status"), 40) or "unknown" for item in anonymous_accounts),
+        }
     for group in groups:
         group["account_count"] = sum(1 for row in rows if row["group_id"] == group["id"])
     return groups, rows, anonymous_summary
@@ -159,12 +176,14 @@ class MatrixStore:
         with self._lock:
             mtime = self.path.stat().st_mtime
             if self._snapshot is None or mtime != self._mtime:
-                raw = yaml.safe_load(self.path.read_text(encoding="utf-8")) or {}
+                source_text = self.path.read_text(encoding="utf-8")
+                raw = yaml.safe_load(source_text) or {}
                 if not isinstance(raw, dict):
                     raise ValueError("account matrix must be a mapping")
                 groups, rows, anonymous = project_matrix(raw)
                 metadata = {
                     "path": "accounts/ACCOUNT-MATRIX.yaml",
+                    "revision": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
                     "version": raw.get("version"),
                     "updated": text(raw.get("updated"), 20) or None,
                     "description": text(raw.get("description"), 400),
@@ -189,21 +208,24 @@ class AccountsApi:
         token: str | None = None,
         environment: str | None = None,
         allowed_origins: tuple[str, ...] | None = None,
+        auth_policy: AuthPolicy | None = None,
     ) -> None:
         self.store = MatrixStore(matrix_path)
         self.token = token if token is not None else os.environ.get("ACCOUNTS_API_TOKEN", "").strip()
         self.environment = (environment or os.environ.get("ACCOUNTS_API_ENV", "development")).strip().lower()
+        self.auth_policy = auth_policy or AuthPolicy.from_env("ACCOUNTS_API_", "accounts-api", "accounts:read")
         configured_origins = os.environ.get("ACCOUNTS_API_CORS_ORIGINS", "http://127.0.0.1:3600,http://localhost:3600")
         self.allowed_origins = allowed_origins or tuple(item.strip() for item in configured_origins.split(",") if item.strip())
 
     def _check_read_auth(self, headers: Mapping[str, str]) -> None:
-        if self.environment == "production" and not self.token:
-            raise ApiError(503, "Account reads are disabled until ACCOUNTS_API_TOKEN is configured", code="reads_disabled")
-        if not self.token:
-            return
-        scheme, _, value = headers.get("authorization", "").partition(" ")
-        if scheme.lower() != "bearer" or not secrets.compare_digest(value, self.token):
-            raise ApiError(401, "valid bearer authorization is required", code="unauthorized")
+        try:
+            check_read_auth(self.auth_policy, headers, environment=self.environment, token=self.token)
+        except AuthError as exc:
+            raise ApiError(exc.status, exc.message, code=exc.code) from None
+
+    def _ready(self) -> Response:
+        status, payload = readiness(self.auth_policy, self.environment, self.store)
+        return Response(status, payload)
 
     def _overview(self, query: Mapping[str, list[str]]) -> Response:
         status = query_value(query, "status", MAX_FILTER_LENGTH)
@@ -250,6 +272,8 @@ class AccountsApi:
         try:
             if method == "OPTIONS":
                 return Response(204, {})
+            if method == "GET" and path == "/ready":
+                return self._ready()
             if method == "GET" and path == "/health":
                 return Response(200, {"status": "ok", "service": SERVICE_NAME, "schema_version": SCHEMA_VERSION, "timestamp": utc_now()})
             if path == "/api/v1/accounts":
@@ -304,27 +328,20 @@ class AccountsRequestHandler(BaseHTTPRequestHandler):
     do_DELETE = _dispatch
 
 
-def is_loopback(host: str) -> bool:
-    if host == "localhost":
-        return True
-    try:
-        return ipaddress.ip_address(host).is_loopback
-    except ValueError:
-        return False
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description="Solo Empire account matrix API")
     parser.add_argument("--host", default=os.environ.get("ACCOUNTS_API_HOST", "127.0.0.1"))
-    parser.add_argument("--port", type=int, default=int(os.environ.get("ACCOUNTS_API_PORT", "3470")))
+    parser.add_argument("--port", type=int, default=int(os.environ.get("ACCOUNTS_API_PORT", os.environ.get("PORT", "3470"))))
     parser.add_argument("--matrix", default=None, help="account matrix YAML; defaults to ACCOUNTS_API_MATRIX_PATH or accounts/ACCOUNT-MATRIX.yaml")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error("--port must be between 1 and 65535")
     if args.matrix:
         AccountsRequestHandler.api = AccountsApi(args.matrix)
-    if not is_loopback(args.host) and not AccountsRequestHandler.api.token:
-        parser.error("a non-loopback --host requires ACCOUNTS_API_TOKEN")
+    if not is_loopback(args.host):
+        AccountsRequestHandler.api.environment = "production"
+        if not AccountsRequestHandler.api.auth_policy.ready:
+            parser.error("a non-loopback --host requires valid ACCOUNTS_API_AUTH_* configuration")
     server = ThreadingHTTPServer((args.host, args.port), AccountsRequestHandler)
     print(f"{SERVICE_NAME} running on http://{args.host}:{args.port}", flush=True)
     try:
