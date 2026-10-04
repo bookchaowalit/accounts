@@ -30,11 +30,16 @@ Anonymous identities are returned as counts only. See the
 ## Deploy
 
 This folder is an independent deploy unit described by [`service.yaml`](service.yaml).
-Build from the repository root; the image contains only this service and the
-files listed in `data.reads`, plus the declared reusable `service-auth` dependency:
+Set `RELEASE_CONTEXT` to this service's isolated exported context outside the
+source checkout. The owner must review its release manifest and metadata
+projection before uploading the context or image. The context contains this
+service, the declared reusable `service-auth` dependency, and projected inputs
+from `data.reads`. Building from the raw root checkout bypasses the accounts
+projection and copies the original account matrix.
 
 ```bash
-docker build -f services/accounts-api/Dockerfile -t solo-empire/accounts-api .
+: "${RELEASE_CONTEXT:?Set RELEASE_CONTEXT to the reviewed accounts-api export}"
+docker build -f "$RELEASE_CONTEXT/services/accounts-api/Dockerfile" -t solo-empire/accounts-api "$RELEASE_CONTEXT"
 ```
 
 The image enforces scoped JWT authorization and binds `0.0.0.0`.
