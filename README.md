@@ -28,6 +28,21 @@ GET /api/v1/accounts?status=&platform=&kind=&q=
 Anonymous identities are returned as counts only. See the
 [Accounts API v1 contract](contracts/accounts.v1.md) for every field.
 
+## Deploy
+
+This folder is an independent deploy unit described by [`service.yaml`](service.yaml).
+Build from the repository root; the image contains only this service and the
+files listed in `data.reads`:
+
+```bash
+docker build -f services/accounts-api/Dockerfile -t solo-empire/accounts-api .
+```
+
+The image sets `*_ENV=production` and binds `0.0.0.0`, so it refuses to start
+without its `*_TOKEN` secret. `deploy.target` stays `unassigned` until a target
+is chosen. `task services:check` reports drift from the
+[decentralized services spec](../../docs/superpowers/specs/2026-10-04-decentralized-services-and-storage-design.md).
+
 ## Test
 
 ```bash

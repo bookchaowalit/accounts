@@ -1,0 +1,15 @@
+schema: solo-empire.service.v1
+name: accounts-api
+owner_module: accounts
+port: 3470
+env_prefix: ACCOUNTS_API_
+contract: contracts/accounts.v1.md
+health: /health
+data:
+  owner: solo-empire-account-matrix
+  reads: [accounts/ACCOUNT-MATRIX.yaml]
+  writes: []
+secrets: []
+deploy:
+  target: unassigned
+  image: Dockerfile
