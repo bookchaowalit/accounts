@@ -82,6 +82,14 @@ def test_domain_release_with_mail_still_on_it():
     assert ("domain_release_takeover", 5) in found and ("domain_expiring", 5) in found
 
 
+def test_domain_release_counts_mailboxes_marked_for_deletion():
+    domains = [{"id": 5, "name": "old.example", "status": "releasing", "auto_renew": True, "renews_on": None}]
+    found = codes(analyse([ident(1)], domains, [mail(1, domain=5, status="to-delete")], [], TODAY))
+    assert ("domain_release_takeover", 5) in found
+    gone = codes(analyse([ident(1)], domains, [mail(1, domain=5, status="deleted")], [], TODAY))
+    assert ("domain_release_takeover", 5) not in gone
+
+
 def test_login_mailbox_marked_for_deletion_and_review():
     out = analyse([ident(1)], [], [mail(1, status="to-delete"), mail(2, reviewed=None)], [acct(3, login=1)], TODAY)
     found = codes(out)

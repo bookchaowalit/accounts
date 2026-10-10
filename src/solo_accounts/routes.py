@@ -120,7 +120,8 @@ def analyse(identities: list[dict], domains: list[dict], mailboxes: list[dict], 
 
     # Domains that are being let go while mail still depends on them.
     for row in domains:
-        users = [m for m in live_mail if m.get("domain_id") == row["id"]]
+        # A mailbox marked to-delete still receives password resets until it is really gone.
+        users = [m for m in mailboxes if m.get("domain_id") == row["id"] and m["status"] != "deleted"]
         logins = [a for a in live_acct if mbox.get(a.get("login_mailbox_id"), {}).get("domain_id") == row["id"]]
         letting_go = row["status"] in {"releasing", "released"} or not row["auto_renew"]
         if letting_go and (users or logins):
