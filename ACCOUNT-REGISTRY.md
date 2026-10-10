@@ -127,18 +127,9 @@ ownership are confirmed.
 
 ### Optional anonymous identities
 
-These are not part of the active business plan. If created, they must remain
-strictly separate from every public, personal, and business identity.
-
-| Family | Platforms | Status | Purpose |
-|---|---|---|---|
-| `rustpixel` | X, Reddit | planned | Mature/18+ creative content, subject to platform rules |
-| `hollowtide` | X, Reddit | planned | Private thoughts and venting |
-| `nexadrift` | X, Reddit | planned | Experimental memes and shitposting |
-
-Isolation rules: separate email, profile details, recovery identity, payment
-method, browser/session, and device. Never cross-link, tag, or reuse content
-between anonymous and branded accounts.
+Z3 personas are not tracked in this repository; their records live only in each persona's own private vault (see `templates/accounts/account.yaml` and `task accounts:isolation:check`).
+Never cross-link, tag, or reuse content between an isolated persona and any
+public, personal, or branded account.
 
 ## Existing operational platform accounts
 

@@ -215,16 +215,6 @@ existing_platform_records:
 
 anonymous_identities:
   isolation_required: true
-  accounts:
-    - id: rustpixel
-      platforms: [x, reddit]
-      status: planned
-      purpose: Mature/18+ creative content subject to platform rules
-    - id: hollowtide
-      platforms: [x, reddit]
-      status: planned
-      purpose: Private thoughts and venting
-    - id: nexadrift
-      platforms: [x, reddit]
-      status: planned
-      purpose: Experimental memes and shitposting
+  tracked_in_git: false
+  note: Z3 personas live only in their own private vault, never in this file.
+

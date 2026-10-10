@@ -36,7 +36,7 @@ Solo Empire uses three identity layers:
 3. `faceless-brand` — public niche or venture accounts that use a brand,
    logo, screen recording, hands, or product visuals instead of a face.
 
-Optional anonymous identities are tracked separately and must never share
+Optional anonymous (Z3) identities are not tracked in this repository and and must never share
 emails, profile details, payment methods, devices, or cross-links with the
 public identities.
 

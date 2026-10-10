@@ -66,12 +66,6 @@ identities. See [`cloud/README.md`](./cloud/README.md),
 | [`instagram/brand/book-daily/account.yaml`](./instagram/brand/book-daily/account.yaml) | `faceless-brand` | `book-daily` | `planned` |
 | [`instagram/brand/bangkok-maker/account.yaml`](./instagram/brand/bangkok-maker/account.yaml) | `faceless-brand` | `bangkok-maker` | `planned` |
 | [`tiktok/brand/bangkok-maker/account.yaml`](./tiktok/brand/bangkok-maker/account.yaml) | `faceless-brand` | `bangkok-maker` | `planned` |
-| [`x/anonymous/rustpixel/account.yaml`](./x/anonymous/rustpixel/account.yaml) | `anonymous` | `rustpixel` | `planned` |
-| [`reddit/anonymous/rustpixel/account.yaml`](./reddit/anonymous/rustpixel/account.yaml) | `anonymous` | `rustpixel` | `planned` |
-| [`x/anonymous/hollowtide/account.yaml`](./x/anonymous/hollowtide/account.yaml) | `anonymous` | `hollowtide` | `planned` |
-| [`reddit/anonymous/hollowtide/account.yaml`](./reddit/anonymous/hollowtide/account.yaml) | `anonymous` | `hollowtide` | `planned` |
-| [`x/anonymous/nexadrift/account.yaml`](./x/anonymous/nexadrift/account.yaml) | `anonymous` | `nexadrift` | `planned` |
-| [`reddit/anonymous/nexadrift/account.yaml`](./reddit/anonymous/nexadrift/account.yaml) | `anonymous` | `nexadrift` | `planned` |
 | [`facebook/business/ai-sme-page/account.yaml`](./facebook/business/ai-sme-page/account.yaml) | `faceless-brand` | `ai-sme-page` | `needs-verification` |
 | [`facebook/business/web-dev-page/account.yaml`](./facebook/business/web-dev-page/account.yaml) | `faceless-brand` | `web-dev-page` | `needs-verification` |
 | [`discord/community/workspace-identity/account.yaml`](./discord/community/workspace-identity/account.yaml) | `faceless-brand` | `workspace-identity` | `active` |
