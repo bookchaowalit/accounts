@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import { authReadiness, createSession, readSession, subjects } from '@/lib/auth';
+import { authReadiness, createSession, readSession, subjectFor, subjects } from '@/lib/auth';
 
 const origin = 'https://accounts.example.com';
 const env = {
@@ -29,5 +29,11 @@ describe('owner sessions', () => {
     expect(await readSession(value, origin, { ...env, ACCOUNTS_WEB_SESSION_KEY: randomBytes(32).toString('base64url') })).toBeNull();
     expect(await readSession(value, origin, { ...env, ACCOUNTS_WEB_OWNER_SUBJECTS: '{}' })).toBeNull();
     await expect(createSession('stranger', origin, env)).rejects.toThrow('owner_not_allowed');
+  });
+  it('matches a verified email only', () => {
+    const byEmail = { ...env, ACCOUNTS_WEB_OWNER_SUBJECTS: JSON.stringify({ 'email:owner@example.com': 'owner' }) };
+    expect(subjectFor({ sub: '123', email: 'Owner@Example.com', email_verified: true }, byEmail)).toBe('email:owner@example.com');
+    expect(subjectFor({ sub: '123', email: 'owner@example.com', email_verified: false }, byEmail)).toBe('123');
+    expect(subjectFor({ sub: '123', email: 'owner@example.com' }, byEmail)).toBe('123');
   });
 });

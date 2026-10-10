@@ -14,7 +14,10 @@ export const cookieOptions = { httpOnly: true, secure: true, sameSite: 'lax' as 
 export const SESSION_SECONDS = 8 * 3600;
 export interface Session { sub: string; tenant: string; exp: number }
 
-/** ACCOUNTS_WEB_OWNER_SUBJECTS: {"<oidc sub>": "<tenant>"} with exactly one entry; anything else allows nobody. */
+/**
+ * ACCOUNTS_WEB_OWNER_SUBJECTS: {"<subject>": "<tenant>"} with exactly one entry; anything else allows nobody.
+ * A subject is the OIDC `sub`, or `email:<address>` matched against a verified `email` claim.
+ */
 export function subjects(env: Env): Record<string, string> {
   try {
     const value: unknown = JSON.parse(env.ACCOUNTS_WEB_OWNER_SUBJECTS ?? '{}');
@@ -110,7 +113,7 @@ export async function startLogin(origin: string, env: Env) {
   const state = oidc.randomState();
   const nonce = oidc.randomNonce();
   const url = oidc.buildAuthorizationUrl(config, {
-    redirect_uri: `${origin}/auth/callback`, response_type: 'code', scope: 'openid',
+    redirect_uri: `${origin}/auth/callback`, response_type: 'code', scope: 'openid email',
     code_challenge: await oidc.calculatePKCECodeChallenge(verifier), code_challenge_method: 'S256', state, nonce,
   });
   if (url.protocol !== 'https:') throw new Error('issuer_not_secure');
@@ -131,5 +134,16 @@ export async function finishLogin(callback: URL, transaction: string | undefined
   });
   const claims = tokens.claims(); // signature, issuer, audience, nonce, expiry, state and PKCE are verified
   if (!claims || typeof claims.sub !== 'string') throw new Error('id_token_invalid');
-  return createSession(claims.sub, origin, env);
+  return createSession(subjectFor(claims, env), origin, env);
+}
+
+/** The allow-list key this identity matches: its `sub`, else its verified email as `email:<address>`. */
+export function subjectFor(claims: { sub: string; email?: unknown; email_verified?: unknown }, env: Env): string {
+  const allowed = subjects(env);
+  if (allowed[claims.sub]) return claims.sub;
+  if (claims.email_verified === true && typeof claims.email === 'string') {
+    const key = `email:${claims.email.trim().toLowerCase()}`;
+    if (allowed[key]) return key;
+  }
+  return claims.sub;
 }
