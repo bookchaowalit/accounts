@@ -16,7 +16,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
       {error && <p className="error" role="alert">{ERRORS[error] ?? 'เข้าสู่ระบบไม่สำเร็จ'}</p>}
       {readiness.ready
         ? <a href="/auth/login"><button type="button">เข้าสู่ระบบด้วยบัญชีของคุณ</button></a>
-        : <p className="muted">ยังขาดค่า: {Object.entries(readiness.checks).filter(([, ok]) => !ok).map(([name]) => name).join(', ')}</p>}
+        : <p className="muted">ระบบล็อกอินยังตั้งค่าไม่ครบ</p>}
     </div>
   );
 }

@@ -10,7 +10,7 @@ export type Lookup = Record<ResourceName, Map<number, string>>;
 export async function loadAll(tenant: string) {
   const [identities, domains, mailboxes, accounts] = await Promise.all(
     (['identities', 'domains', 'mailboxes', 'accounts'] as const).map((name) => listAll<Row>(name)));
-  for (const row of mailboxes) row.address = decryptAddress(row.address_ciphertext, tenant, process.env) ?? row.address_hint;
+  for (const row of mailboxes) row.address = decryptAddress(row.address_ciphertext, row.address_hash, tenant, process.env) ?? row.address_hint;
   const lookup: Lookup = {
     identities: new Map(identities.map((r) => [r.id, r.slug])),
     domains: new Map(domains.map((r) => [r.id, r.name])),
@@ -30,6 +30,11 @@ export function display(field: FieldDef, row: Row, lookup: Lookup): string {
 
 export function listFields(def: ResourceDef): FieldDef[] {
   return def.fields.filter((f) => f.list);
+}
+
+/** Only what the edit form shows: no ciphertext, hash or other columns in the client payload. */
+export function formValues(def: ResourceDef, row: Row): Record<string, unknown> {
+  return Object.fromEntries(def.fields.map((f) => [f.name, row[f.name] ?? null]));
 }
 
 export function refOptions(fields: FieldDef[], lookup: Lookup): Record<string, { value: number; label: string }[]> {

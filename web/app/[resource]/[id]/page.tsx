@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { deleteRecord, updateRecord } from '@/app/actions';
 import { RecordForm } from '@/components/RecordForm';
-import { loadAll, refOptions } from '@/lib/records';
+import { formValues, loadAll, refOptions } from '@/lib/records';
 import { resourceDef } from '@/lib/schema';
 import { requireSession } from '@/lib/session';
 
@@ -30,7 +30,7 @@ export default async function ResourceEdit({ params, searchParams }: {
       <p><Link href={`/${def.name}`}>← {def.title}</Link></p>
       <h1>แก้ไข{def.singular} <span className="muted">#{row.id}</span></h1>
       <RecordForm fields={def.fields} action={updateRecord.bind(null, def.name, row.id, row.version)} options={options}
-        initial={row} submitLabel="บันทึก" />
+        initial={formValues(def, row)} submitLabel="บันทึก" />
       <h2>ลบ</h2>
       <form action={deleteRecord.bind(null, def.name, row.id)} className="form-actions">
         <button className="danger" type="submit">ลบ{def.singular}นี้</button>

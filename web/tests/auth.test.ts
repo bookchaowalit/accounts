@@ -16,7 +16,10 @@ describe('owner sessions', () => {
     expect(authReadiness({ ...env, ACCOUNTS_WEB_SESSION_KEY: 'short' }).ready).toBe(false);
   });
   it('accepts only allow-listed subjects with a valid tenant', () => {
-    expect(subjects({ ACCOUNTS_WEB_OWNER_SUBJECTS: '{"a":"owner","b":"Bad Tenant","c":3}' })).toEqual({ a: 'owner' });
+    expect(subjects({ ACCOUNTS_WEB_OWNER_SUBJECTS: '{"a":"owner"}' })).toEqual({ a: 'owner' });
+    expect(subjects({ ACCOUNTS_WEB_OWNER_SUBJECTS: '{"a":"Bad Tenant"}' })).toEqual({});
+    // one workspace-wide API token: a second subject would share the owner's data, so nobody gets in
+    expect(subjects({ ACCOUNTS_WEB_OWNER_SUBJECTS: '{"a":"owner","b":"owner"}' })).toEqual({});
     expect(subjects({ ACCOUNTS_WEB_OWNER_SUBJECTS: '["a"]' })).toEqual({});
   });
   it('seals a session that only this origin and key can read', async () => {

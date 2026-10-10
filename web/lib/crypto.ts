@@ -2,11 +2,16 @@ import { createCipheriv, createDecipheriv, createHmac, hkdfSync, randomBytes } f
 
 // Email addresses never reach the accounts-api in clear. This backend encrypts each one with
 // AES-256-GCM under a key derived per tenant from ACCOUNTS_WEB_FIELD_KEY, and sends a keyed hash
-// (HMAC-SHA256, its own derived key) so the API can still enforce uniqueness. Envelope:
-//   v1:<iv b64url>:<ciphertext b64url>:<tag b64url>     (never contains "@"; the database checks that)
+// (HMAC-SHA256, its own derived key) so the API can still enforce uniqueness.
+//   envelope: v1:<kid>:<iv b64url>:<ciphertext b64url>:<tag b64url>   (never contains "@"; the database checks)
+//   hash:     <kid>:<hex>
+// The ciphertext is bound to its tenant and its hash (AAD), and decryption re-checks the hash, so a row
+// whose ciphertext was swapped or does not match its hash reads as unreadable instead of as another address.
+// `kid` names the key (ACCOUNTS_WEB_FIELD_KEY is "k1"); rotation adds keys without a format change.
 
 type Env = Record<string, string | undefined>;
 const VERSION = 'v1';
+const KID = 'k1';
 
 function master(env: Env): Buffer {
   const text = env.ACCOUNTS_WEB_FIELD_KEY ?? '';
@@ -25,28 +30,30 @@ export function normalizeAddress(address: string): string {
   return value;
 }
 
+export function hashAddress(address: string, tenant: string, env: Env): string {
+  const digest = createHmac('sha256', derive(env, tenant, 'address-hash')).update(normalizeAddress(address)).digest('hex');
+  return `${KID}:${digest}`;
+}
+
 export function encryptAddress(address: string, tenant: string, env: Env): string {
   const iv = randomBytes(12);
   const cipher = createCipheriv('aes-256-gcm', derive(env, tenant, 'address-encryption'), iv);
-  cipher.setAAD(Buffer.from(tenant));
+  cipher.setAAD(Buffer.from(`${tenant}\n${hashAddress(address, tenant, env)}`));
   const body = Buffer.concat([cipher.update(normalizeAddress(address), 'utf8'), cipher.final()]);
-  return [VERSION, iv.toString('base64url'), body.toString('base64url'), cipher.getAuthTag().toString('base64url')].join(':');
+  return [VERSION, KID, iv.toString('base64url'), body.toString('base64url'), cipher.getAuthTag().toString('base64url')].join(':');
 }
 
-export function decryptAddress(envelope: string, tenant: string, env: Env): string | null {
+export function decryptAddress(envelope: string, hash: string, tenant: string, env: Env): string | null {
   const parts = envelope.split(':');
-  if (parts.length !== 4 || parts[0] !== VERSION) return null;
+  if (parts.length !== 5 || parts[0] !== VERSION || parts[1] !== KID) return null;
   try {
     const decipher = createDecipheriv('aes-256-gcm', derive(env, tenant, 'address-encryption'),
-      Buffer.from(parts[1], 'base64url'));
-    decipher.setAAD(Buffer.from(tenant));
-    decipher.setAuthTag(Buffer.from(parts[3], 'base64url'));
-    return Buffer.concat([decipher.update(Buffer.from(parts[2], 'base64url')), decipher.final()]).toString('utf8');
+      Buffer.from(parts[2], 'base64url'));
+    decipher.setAAD(Buffer.from(`${tenant}\n${hash}`));
+    decipher.setAuthTag(Buffer.from(parts[4], 'base64url'));
+    const address = Buffer.concat([decipher.update(Buffer.from(parts[3], 'base64url')), decipher.final()]).toString('utf8');
+    return hashAddress(address, tenant, env) === hash ? address : null;
   } catch { return null; }
-}
-
-export function hashAddress(address: string, tenant: string, env: Env): string {
-  return createHmac('sha256', derive(env, tenant, 'address-hash')).update(normalizeAddress(address)).digest('hex');
 }
 
 /** A short label that is safe to show and store: first letter, the domain, nothing else. */

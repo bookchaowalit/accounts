@@ -2,9 +2,10 @@ import { EncryptJWT, jwtDecrypt } from 'jose';
 import * as oidc from 'openid-client';
 import { httpsOrigin, localDemo, requestOrigin, type GuardedRequest } from './request-guard';
 
-// Owner-only sign-in through any OIDC provider (Google today; Clerk or another IdP when this becomes a
-// multi-tenant SaaS). A session maps one allow-listed subject to one tenant; `tenant` also scopes the
-// address-encryption keys, so moving to per-customer tenants needs no data format change.
+// Owner-only sign-in through any OIDC provider (Google today). Exactly one subject is allowed: every
+// session uses the same workspace-wide API token, so a second subject would see and change the owner's
+// data. Multi-tenant SaaS needs a token per tenant (token exchange from the session) before this limit
+// can be lifted. `tenant` already scopes the address-encryption keys.
 
 type Env = Record<string, string | undefined>;
 export const SESSION_COOKIE = '__Host-accounts-session';
@@ -13,13 +14,14 @@ export const cookieOptions = { httpOnly: true, secure: true, sameSite: 'lax' as 
 export const SESSION_SECONDS = 8 * 3600;
 export interface Session { sub: string; tenant: string; exp: number }
 
-/** ACCOUNTS_WEB_OWNER_SUBJECTS: {"<oidc sub>": "<tenant>"}; today one owner mapped to "owner". */
+/** ACCOUNTS_WEB_OWNER_SUBJECTS: {"<oidc sub>": "<tenant>"} with exactly one entry; anything else allows nobody. */
 export function subjects(env: Env): Record<string, string> {
   try {
     const value: unknown = JSON.parse(env.ACCOUNTS_WEB_OWNER_SUBJECTS ?? '{}');
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
     const entries = Object.entries(value).filter(([sub, tenant]) =>
       sub.length > 0 && typeof tenant === 'string' && /^[a-z0-9-]{1,64}$/.test(tenant));
+    if (entries.length !== 1 || Object.keys(value).length !== 1) return {};
     return Object.fromEntries(entries) as Record<string, string>;
   } catch { return {}; }
 }

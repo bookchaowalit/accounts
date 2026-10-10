@@ -21,6 +21,7 @@ function explain(error: unknown): string {
   }
   const code = error instanceof Error ? error.message : 'unknown';
   if (code === 'invalid_address') return 'รูปแบบอีเมลไม่ถูกต้อง';
+  if (code.startsWith('invalid_')) return `ค่าไม่ถูกต้อง: ${code.replace(/^invalid_/, '')}`;
   if (code.endsWith('_required')) return `ต้องกรอก ${code.replace(/_required$/, '')}`;
   return 'บันทึกไม่สำเร็จ';
 }

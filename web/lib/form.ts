@@ -26,11 +26,13 @@ export function formToBody(def: ResourceDef, form: FormData, tenant: string, env
         body[field.name] = raw === 'on' || raw === 'true';
         break;
       case 'int':
-        body[field.name] = text ? Number.parseInt(text, 10) : 0;
+        body[field.name] = text ? Number(text) : 0;
         if (!Number.isSafeInteger(body[field.name])) throw new Error(`invalid_${field.name}`);
         break;
       case 'ref':
-        body[field.name] = text ? Number.parseInt(text, 10) : null;
+        body[field.name] = text ? Number(text) : null;
+        if (text && !Number.isSafeInteger(body[field.name])) throw new Error(`invalid_${field.name}`);
+        if (!text && field.required) throw new Error(`${field.name}_required`);
         break;
       case 'enum':
         if (text) body[field.name] = text;
