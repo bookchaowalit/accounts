@@ -1,0 +1,29 @@
+{
+  "name": "solo-accounts-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Accounts web app: owner sign-in (OIDC), encrypted email addresses, CRUD and the risk report over the accounts-api.",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 -p 3623",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 -p 3623",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "jose": "^6.2.12",
+    "next": "16.3.8",
+    "openid-client": "^6.8.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  }
+}

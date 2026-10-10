@@ -1,0 +1,8 @@
+{
+  "name": "solo-accounts-infra",
+  "private": true,
+  "description": "Railway Infrastructure as Code for the solo-accounts services (.railway/railway.ts)",
+  "devDependencies": {
+    "railway": "^3.13.1"
+  }
+}

@@ -1,0 +1,86 @@
+# Accounts cell: identities, mailboxes, platform accounts and domains, with their trust zones,
+# recovery chains and MFA posture. It never stores passwords, recovery codes, TOTP seeds or
+# session data: `vault_ref` points at the password manager item instead.
+#
+# - Email addresses arrive already encrypted (`address_ciphertext`, AES-256-GCM "v1:" envelope) with a
+#   keyed hash (`address_hash`, HMAC-SHA256 per workspace) made by the web backend; this API and its
+#   database never see a plaintext address.
+# - Trust zones stop at z2-separated on purpose: strictly isolated (Z3) personas are refused and live
+#   only in their own vault, never in a system that also holds the owner's real identity.
+# - No graph events: account inventory stays inside this cell.
+cell: accounts
+title: Accounts
+port: 3623
+extend: solo_accounts.routes:register
+resources:
+  identity:
+    table: identities
+    plural: identities
+    filters: [trust_zone, isolation_group, relation, status]
+    order: slug
+    fields:
+      slug: {type: text, required: true, max_length: 120, unique: true}
+      display_name: {type: text, required: true, max_length: 200}
+      trust_zone: {type: enum, required: true, values: [z0-root, z1-public, z2-business, z2-separated]}
+      isolation_group: {type: text, max_length: 120}
+      relation: {type: enum, values: [self, family, work, client], default: self}
+      status: {type: enum, values: [planned, active, paused, retired], default: active}
+      notes: {type: text, max_length: 4000}
+  domain:
+    table: domains
+    plural: domains
+    filters: [identity_id, status, auto_renew]
+    order: name
+    fields:
+      name: {type: text, required: true, max_length: 253, unique: true}
+      identity_id: {type: ref, to: identity}
+      registrar: {type: text, max_length: 120}
+      dns_provider: {type: text, max_length: 120}
+      mail_provider: {type: text, max_length: 120}
+      auto_renew: {type: bool, default: true}
+      renews_on: {type: date}
+      status: {type: enum, values: [active, parked, releasing, released], default: active}
+      notes: {type: text, max_length: 4000}
+  mailbox:
+    table: mailboxes
+    plural: mailboxes
+    filters: [identity_id, domain_id, kind, provider, status, recovery_mailbox_id, forwards_to_id, mfa_method]
+    unique: [[address_hash]]
+    fields:
+      identity_id: {type: ref, to: identity, required: true}
+      domain_id: {type: ref, to: domain}
+      address_ciphertext: {type: text, required: true, max_length: 2000}
+      address_hash: {type: text, required: true, max_length: 128}
+      address_hint: {type: text, required: true, max_length: 200}
+      provider: {type: text, required: true, max_length: 120}
+      kind: {type: enum, values: [mailbox, alias, forward], default: mailbox}
+      forwards_to_id: {type: ref, to: mailbox}
+      recovery_mailbox_id: {type: ref, to: mailbox}
+      mfa_method: {type: enum, values: [passkey, security-key, totp, sms, none, unknown], default: unknown}
+      security_keys: {type: int, default: 0, min: 0, max: 20}
+      recovery_phone: {type: bool, default: false}
+      status: {type: enum, values: [active, unverified, dormant, to-delete, deleted], default: active}
+      last_reviewed_on: {type: date}
+      notes: {type: text, max_length: 4000}
+  account:
+    table: accounts
+    plural: accounts
+    filters: [identity_id, platform, kind, status, login_mailbox_id, admin_account_id, mfa_primary]
+    unique: [[platform, handle]]
+    fields:
+      identity_id: {type: ref, to: identity, required: true}
+      platform: {type: text, required: true, max_length: 80}
+      kind: {type: enum, values: [profile, page, channel, organization, business, service], default: profile}
+      handle: {type: text, max_length: 200}
+      public_url: {type: text, max_length: 1000}
+      login_mailbox_id: {type: ref, to: mailbox}
+      admin_account_id: {type: ref, to: account}
+      social_login: {type: enum, values: [none, google, apple, facebook, other], default: none}
+      mfa_primary: {type: enum, values: [passkey, security-key, totp, sms, none, unknown], default: unknown}
+      mfa_backup: {type: enum, values: [passkey, security-key, totp, sms, offline-codes, none, unknown], default: unknown}
+      phone_bound: {type: bool, default: false}
+      vault_ref: {type: text, max_length: 500}
+      environment: {type: text, max_length: 120}
+      status: {type: enum, values: [planned, setup, active, paused, retired], default: planned}
+      last_verified_on: {type: date}
+      notes: {type: text, max_length: 4000}
