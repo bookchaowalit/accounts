@@ -1,0 +1,8 @@
+system_id: bookchaowalit/private/solo-accounts
+prefix: CARD
+brand: "SOLO ACCOUNTS"
+subtitle: "Inventory ของ identity, mailbox, account และ domain พร้อม trust zone และ recovery chain"
+footer: "solo-accounts — Product Card"
+color: "#264653"
+audience: internal
+tier: L0
