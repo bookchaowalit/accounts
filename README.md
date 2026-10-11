@@ -2,7 +2,7 @@
 
 `accounts-api` is a small read-only backend that turns
 [`accounts/ACCOUNT-MATRIX.yaml`](../../accounts/ACCOUNT-MATRIX.yaml) into JSON
-for the `/accounts` module of [`apps/solo-web`](../../apps/solo-web/). The YAML
+for the `/accounts` module of [`solo-web`](../../projects/product/engineering/book-dev/github/bookchaowalit/private/solo-web/). The YAML
 file stays the source that humans and AI agents edit; the service only reads
 it and reloads when the file changes.
 
