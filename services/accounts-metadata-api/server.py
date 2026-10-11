@@ -8,7 +8,7 @@ only so the UI cannot link them to the public identity.
 
 Run locally from the repository root with::
 
-    python3 services/accounts-api/server.py
+    python3 services/accounts-metadata-api/server.py
 
 Set ``ACCOUNTS_API_MATRIX_PATH`` to use another matrix and
 the ``ACCOUNTS_API_AUTH_*`` policy before exposing the service outside local development.
@@ -62,6 +62,7 @@ def utc_now() -> str:
 
 
 def repository_root() -> Path:
+    # <solo-accounts>/services/accounts-metadata-api/server.py -> <solo-accounts>
     return Path(__file__).resolve().parents[2]
 
 

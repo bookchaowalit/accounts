@@ -1,3 +1,17 @@
+# accounts-metadata-api (in solo-accounts)
+
+Moved out of solo-empire `services/accounts-api` on 2026-10-11 with its history (subtree add). A
+read-only projection of the account matrix `accounts/ACCOUNT-MATRIX.yaml` for the Solo Web `/accounts`
+module. **The matrix is read from this repository's root `accounts/` folder** (the file moves here from
+solo-empire `accounts/`); override with `ACCOUNTS_API_MATRIX_PATH`. This service is separate from the
+accounts cell API in `src/` (Postgres). `vendor/service-auth` is a vendored copy of
+`bookchaowalit/solo-service-auth`.
+
+Test: `PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m unittest discover -s services/accounts-metadata-api/tests -v`
+(the test against the real matrix is skipped until `accounts/ACCOUNT-MATRIX.yaml` exists here).
+
+---
+
 # Solo Empire Accounts API
 
 `accounts-api` is a small read-only backend that turns
@@ -8,11 +22,11 @@ it and reloads when the file changes.
 
 ## Run
 
-From the repository root:
+From the solo-accounts repository root:
 
 ```bash
-python3 -m pip install ./packages/service-auth ./services/accounts-api
-python3 services/accounts-api/server.py
+python3 -m pip install ./services/accounts-metadata-api/vendor/service-auth ./services/accounts-metadata-api
+python3 services/accounts-metadata-api/server.py
 ```
 
 The default listener is `http://127.0.0.1:3470`. Configure
@@ -30,26 +44,19 @@ Anonymous identities are returned as counts only. See the
 ## Deploy
 
 This folder is an independent deploy unit described by [`service.yaml`](service.yaml).
-Set `RELEASE_CONTEXT` to this service's isolated exported context outside the
-source checkout. The owner must review its release manifest and metadata
-projection before uploading the context or image. The context contains this
-service, the declared reusable `service-auth` dependency, and projected inputs
-from `data.reads`. Building from the raw root checkout bypasses the accounts
-projection and copies the original account matrix.
+The solo-accounts repository root is the Docker build context (service + vendored `service-auth` + `accounts/ACCOUNT-MATRIX.yaml`).
 
 ```bash
-: "${RELEASE_CONTEXT:?Set RELEASE_CONTEXT to the reviewed accounts-api export}"
-docker build -f "$RELEASE_CONTEXT/services/accounts-api/Dockerfile" -t solo-empire/accounts-api "$RELEASE_CONTEXT"
+docker build -f services/accounts-metadata-api/Dockerfile -t solo-accounts-metadata-api .
 ```
 
 The image enforces scoped JWT authorization and binds `0.0.0.0`.
-`deploy.target` stays `unassigned` until the parent deployment configuration selects a target. `task services:check` reports drift from the
-[decentralized services spec](../../docs/superpowers/specs/2026-10-04-decentralized-services-and-storage-design.md).
+`deploy.target` stays `unassigned` until the parent deployment configuration selects a target. See the decentralized services spec in solo-empire (`docs/superpowers/specs/2026-10-04-decentralized-services-and-storage-design.md`).
 
 ## Test
 
 ```bash
-python3 services/accounts-api/tests/test_server.py
+PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m unittest discover -s services/accounts-metadata-api/tests -v
 ```
 
 ## Scoped authorization and readiness

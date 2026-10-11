@@ -204,7 +204,9 @@ class AccountsApiTest(unittest.TestCase):
         self.assertEqual(response.payload["error"]["code"], "matrix_unavailable")
 
     def test_real_matrix_projects(self) -> None:
-        real = Path(__file__).resolve().parents[3] / "accounts" / "ACCOUNT-MATRIX.yaml"
+        real = Path(os.environ.get("ACCOUNTS_API_MATRIX_PATH") or Path(__file__).resolve().parents[3] / "accounts" / "ACCOUNT-MATRIX.yaml")
+        if not real.is_file():
+            self.skipTest(f"account matrix not present at {real}")
         response = AccountsApi(real, token="", environment="development").handle("GET", "/api/v1/accounts")
         self.assertEqual(response.status, 200)
         self.assertGreater(response.payload["summary"]["accounts_total"], 0)

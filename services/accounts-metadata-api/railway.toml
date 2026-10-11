@@ -1,6 +1,6 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "services/accounts-api/Dockerfile"
+dockerfilePath = "services/accounts-metadata-api/Dockerfile"
 
 [deploy]
 healthcheckPath = "/ready"
