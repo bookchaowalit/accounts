@@ -9,6 +9,8 @@ addresses: mailboxes are named by their ``address_hint``.
 from datetime import date, timedelta
 from typing import Any
 
+from fastapi import HTTPException
+
 SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2, "info": 3}
 WEAK_MFA = {"sms": "high", "none": "high", "unknown": "medium"}
 LIVE_MAILBOX = {"active", "unverified", "dormant"}
@@ -16,6 +18,16 @@ LIVE_ACCOUNT = {"setup", "active", "paused"}
 RECOVERY_HUB = 3  # a mailbox that can reset this many others is a single point of failure
 REVIEW_DAYS = 180
 RENEWAL_WARNING_DAYS = 45
+MAX_ROWS = 20_000  # per resource; a bigger workspace gets 413 instead of an unbounded scan
+MAX_FINDINGS = 1_000  # counts always cover everything; the list is cut after this many
+COLUMNS = {
+    "identity": "id, slug, trust_zone, isolation_group, relation",
+    "domain": "id, name, status, auto_renew, renews_on",
+    "mailbox": ("id, identity_id, domain_id, recovery_mailbox_id, security_keys, mfa_method, status,"
+                " last_reviewed_on, kind, address_hint"),
+    "account": ("id, identity_id, login_mailbox_id, admin_account_id, mfa_primary, status, social_login,"
+                " phone_bound, platform, handle, kind"),
+}
 
 
 def finding(severity: str, code: str, kind: str, record: dict[str, Any], label: str, message: str) -> dict[str, Any]:
@@ -158,9 +170,13 @@ def register(ctx) -> None:
         rows: dict[str, list[dict]] = {}
         with ctx.bound(caller) as conn:
             for name in names:
-                r = ctx.cell.resource(name)
-                rows[name] = conn.execute(f"SELECT {r.select} FROM {schema}.{r.table} ORDER BY id").fetchall()
+                table = ctx.cell.resource(name).table
+                rows[name] = conn.execute(f"SELECT {COLUMNS[name]} FROM {schema}.{table} ORDER BY id LIMIT %s",
+                                          (MAX_ROWS + 1,)).fetchall()
+                if len(rows[name]) > MAX_ROWS:
+                    raise HTTPException(status_code=413, detail={"error": "workspace_too_large", "resource": name,
+                                                                 "limit": MAX_ROWS})
         findings = analyse(rows["identity"], rows["domain"], rows["mailbox"], rows["account"])
         counts = {level: sum(1 for f in findings if f["severity"] == level) for level in SEVERITY_ORDER}
-        return {"generated_on": date.today().isoformat(), "counts": counts, "findings": findings,
-                "totals": {name: len(rows[name]) for name in names}}
+        return {"generated_on": date.today().isoformat(), "counts": counts, "findings": findings[:MAX_FINDINGS],
+                "truncated": len(findings) > MAX_FINDINGS, "totals": {name: len(rows[name]) for name in names}}

@@ -29,6 +29,8 @@ describe('owner sessions', () => {
     expect(await readSession(value, origin, { ...env, ACCOUNTS_WEB_SESSION_KEY: randomBytes(32).toString('base64url') })).toBeNull();
     expect(await readSession(value, origin, { ...env, ACCOUNTS_WEB_OWNER_SUBJECTS: '{}' })).toBeNull();
     await expect(createSession('stranger', origin, env)).rejects.toThrow('owner_not_allowed');
+    // bumping the generation signs every existing session out
+    expect(await readSession(value, origin, { ...env, ACCOUNTS_WEB_SESSION_GENERATION: '2' })).toBeNull();
   });
   it('matches a verified email only', () => {
     const byEmail = { ...env, ACCOUNTS_WEB_OWNER_SUBJECTS: JSON.stringify({ 'email:owner@example.com': 'owner' }) };

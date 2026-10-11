@@ -52,6 +52,11 @@ SaaS), maps the subject to a tenant (`ACCOUNTS_WEB_OWNER_SUBJECTS`), and calls t
 with the `accounts-web` automation token (empire-platform, 30 days, `accounts.*` only). The token,
 field key and session key never reach the browser. Variables: see `web/.env.example`.
 
+The `accounts-web` token lives with the other automation tokens in `~/.config/empire-platform/tokens`, so
+`empire-monitor` warns 7 days before it expires; then run `scripts/renew-web-token.sh`. To sign every
+browser out, bump `ACCOUNTS_WEB_SESSION_GENERATION` in Vercel and redeploy. Every page carries a
+per-request nonce CSP (`web/proxy.ts`).
+
 ```bash
 cd web && npm install && npm test && npm run typecheck && npm run build
 vercel deploy --prod   # project solo-accounts-web; variables set in Vercel, never in the repository

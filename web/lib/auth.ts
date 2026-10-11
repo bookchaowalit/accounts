@@ -14,6 +14,11 @@ export const cookieOptions = { httpOnly: true, secure: true, sameSite: 'lax' as 
 export const SESSION_SECONDS = 8 * 3600;
 export interface Session { sub: string; tenant: string; exp: number }
 
+/** Bump ACCOUNTS_WEB_SESSION_GENERATION (and redeploy) to sign every browser out at once. */
+function generation(env: Env): string {
+  return /^[0-9]{1,9}$/.test(env.ACCOUNTS_WEB_SESSION_GENERATION ?? '') ? env.ACCOUNTS_WEB_SESSION_GENERATION! : '1';
+}
+
 /**
  * ACCOUNTS_WEB_OWNER_SUBJECTS: {"<subject>": "<tenant>"} with exactly one entry; anything else allows nobody.
  * A subject is the OIDC `sub`, or `email:<address>` matched against a verified `email` claim.
@@ -74,7 +79,7 @@ export async function createSession(sub: string, origin: string, env: Env) {
   const tenant = subjects(env)[sub];
   if (!authReadiness(env).ready || !tenant) throw new Error('owner_not_allowed');
   const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
-  return { value: await seal({ sub, tenant }, 'accounts-session', origin, expires, env), maxAge: SESSION_SECONDS };
+  return { value: await seal({ sub, tenant, gen: generation(env) }, 'accounts-session', origin, expires, env), maxAge: SESSION_SECONDS };
 }
 
 export async function readSession(value: string | undefined, origin: string, env: Env): Promise<Session | null> {
@@ -82,6 +87,7 @@ export async function readSession(value: string | undefined, origin: string, env
   try {
     const p = await unseal(value, 'accounts-session', origin, env);
     if (typeof p.sub !== 'string' || typeof p.tenant !== 'string' || typeof p.exp !== 'number') return null;
+    if (p.gen !== generation(env)) return null;
     return subjects(env)[p.sub] === p.tenant ? { sub: p.sub, tenant: p.tenant, exp: p.exp } : null;
   } catch { return null; }
 }
