@@ -1,5 +1,6 @@
 import { EncryptJWT, jwtDecrypt } from 'jose';
 import * as oidc from 'openid-client';
+import { passwordConfigured } from './password';
 import { httpsOrigin, localDemo, requestOrigin, type GuardedRequest } from './request-guard';
 
 // Owner-only sign-in through any OIDC provider (Google today). Exactly one subject is allowed: every
@@ -48,16 +49,24 @@ function issuer(env: Env): URL | null {
   } catch { return null; }
 }
 
+/** Password sessions carry this subject; it maps to the owner tenant while password sign-in is configured. */
+export const PASSWORD_SUBJECT = 'password:owner';
+
+function oidcReady(env: Env): boolean {
+  return !!issuer(env) && !!env.ACCOUNTS_WEB_OIDC_CLIENT_ID && !!env.ACCOUNTS_WEB_OIDC_CLIENT_SECRET &&
+    Object.keys(subjects(env)).length > 0;
+}
+
+/** The tenant a session subject belongs to, or null when that sign-in method is not configured. */
+function tenantOf(sub: string, env: Env): string | null {
+  if (sub === PASSWORD_SUBJECT) return passwordConfigured(env) ? 'owner' : null;
+  return oidcReady(env) ? subjects(env)[sub] ?? null : null;
+}
+
 export function authReadiness(env: Env) {
-  const checks = {
-    ACCOUNTS_WEB_PUBLIC_ORIGIN: !!httpsOrigin(env.ACCOUNTS_WEB_PUBLIC_ORIGIN),
-    ACCOUNTS_WEB_OIDC_ISSUER: !!issuer(env),
-    ACCOUNTS_WEB_OIDC_CLIENT_ID: !!env.ACCOUNTS_WEB_OIDC_CLIENT_ID,
-    ACCOUNTS_WEB_OIDC_CLIENT_SECRET: !!env.ACCOUNTS_WEB_OIDC_CLIENT_SECRET,
-    ACCOUNTS_WEB_OWNER_SUBJECTS: Object.keys(subjects(env)).length > 0,
-    ACCOUNTS_WEB_SESSION_KEY: !!sessionKey(env),
-  };
-  return { ready: Object.values(checks).every(Boolean), checks };
+  const base = !!httpsOrigin(env.ACCOUNTS_WEB_PUBLIC_ORIGIN) && !!sessionKey(env);
+  const methods = { oidc: base && oidcReady(env), password: base && passwordConfigured(env) };
+  return { ready: methods.oidc || methods.password, methods };
 }
 
 async function seal(payload: Record<string, unknown>, audience: string, origin: string, expiration: number, env: Env) {
@@ -76,7 +85,7 @@ async function unseal(value: string, audience: string, origin: string, env: Env)
 }
 
 export async function createSession(sub: string, origin: string, env: Env) {
-  const tenant = subjects(env)[sub];
+  const tenant = tenantOf(sub, env);
   if (!authReadiness(env).ready || !tenant) throw new Error('owner_not_allowed');
   const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
   return { value: await seal({ sub, tenant, gen: generation(env) }, 'accounts-session', origin, expires, env), maxAge: SESSION_SECONDS };
@@ -88,7 +97,7 @@ export async function readSession(value: string | undefined, origin: string, env
     const p = await unseal(value, 'accounts-session', origin, env);
     if (typeof p.sub !== 'string' || typeof p.tenant !== 'string' || typeof p.exp !== 'number') return null;
     if (p.gen !== generation(env)) return null;
-    return subjects(env)[p.sub] === p.tenant ? { sub: p.sub, tenant: p.tenant, exp: p.exp } : null;
+    return tenantOf(p.sub, env) === p.tenant ? { sub: p.sub, tenant: p.tenant, exp: p.exp } : null;
   } catch { return null; }
 }
 
@@ -102,7 +111,7 @@ export async function authorize(request: GuardedRequest, cookie: string | undefi
 // Cache only discovery metadata in a warm instance, never user or provider tokens.
 const configurations = new Map<string, Promise<oidc.Configuration>>();
 async function configuration(env: Env) {
-  if (!authReadiness(env).ready) throw new Error('auth_not_configured');
+  if (!authReadiness(env).methods.oidc) throw new Error('auth_not_configured');
   const key = JSON.stringify([env.ACCOUNTS_WEB_OIDC_ISSUER, env.ACCOUNTS_WEB_OIDC_CLIENT_ID]);
   if (!configurations.has(key)) {
     const pending = oidc.discovery(issuer(env)!, env.ACCOUNTS_WEB_OIDC_CLIENT_ID!, env.ACCOUNTS_WEB_OIDC_CLIENT_SECRET!,

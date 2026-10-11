@@ -47,8 +47,9 @@ returns findings (`recovery_hub_unprotected`, `recovery_cycle`, `recovery_not_li
 
 ## Web
 
-`web/` signs the owner in through OIDC (Google today; another IdP such as Clerk for a multi-tenant
-SaaS), maps the subject to a tenant (`ACCOUNTS_WEB_OWNER_SUBJECTS`), and calls the API server-side
+`web/` signs the owner in with a password plus an authenticator code (`node scripts/set-password.ts`
+in `web/` stores the scrypt hash and TOTP secret in Vercel), or through OIDC (Google; another IdP such
+as Clerk for a multi-tenant SaaS); failed password attempts lock a client out for 15 minutes, maps the subject to a tenant (`ACCOUNTS_WEB_OWNER_SUBJECTS`), and calls the API server-side
 with the `accounts-web` automation token (empire-platform, 30 days, `accounts.*` only). The token,
 field key and session key never reach the browser. Variables: see `web/.env.example`.
 

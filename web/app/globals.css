@@ -49,3 +49,7 @@ button.link { background: none; color: var(--muted); padding: 0; }
 .findings { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .findings li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
 .badge { font-size: 12px; font-weight: 700; text-transform: uppercase; margin-right: 8px; }
+.login { max-width: 440px; margin: 40px auto; }
+.login-form { display: grid; gap: 12px; margin-bottom: 16px; }
+.login-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+button.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--line); }

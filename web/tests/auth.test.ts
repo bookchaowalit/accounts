@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import { authReadiness, createSession, readSession, subjectFor, subjects } from '@/lib/auth';
+import { authReadiness, createSession, PASSWORD_SUBJECT, readSession, subjectFor, subjects } from '@/lib/auth';
+import { hashPassword, newTotpSecret } from '@/lib/password';
 
 const origin = 'https://accounts.example.com';
 const env = {
@@ -37,5 +38,14 @@ describe('owner sessions', () => {
     expect(subjectFor({ sub: '123', email: 'Owner@Example.com', email_verified: true }, byEmail)).toBe('email:owner@example.com');
     expect(subjectFor({ sub: '123', email: 'owner@example.com', email_verified: false }, byEmail)).toBe('123');
     expect(subjectFor({ sub: '123', email: 'owner@example.com' }, byEmail)).toBe('123');
+  });
+  it('gives password sessions the owner tenant only while password sign-in is configured', async () => {
+    const pw = { ACCOUNTS_WEB_PUBLIC_ORIGIN: origin, ACCOUNTS_WEB_SESSION_KEY: env.ACCOUNTS_WEB_SESSION_KEY,
+      ACCOUNTS_WEB_PASSWORD_HASH: hashPassword('a long password!'), ACCOUNTS_WEB_TOTP_SECRET: newTotpSecret() };
+    expect(authReadiness(pw)).toMatchObject({ ready: true, methods: { password: true, oidc: false } });
+    const { value } = await createSession(PASSWORD_SUBJECT, origin, pw);
+    expect(await readSession(value, origin, pw)).toMatchObject({ tenant: 'owner' });
+    expect(await readSession(value, origin, { ...pw, ACCOUNTS_WEB_TOTP_SECRET: '' })).toBeNull();
+    await expect(createSession(PASSWORD_SUBJECT, origin, env)).rejects.toThrow('owner_not_allowed');
   });
 });
