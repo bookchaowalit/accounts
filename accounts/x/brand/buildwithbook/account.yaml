@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: buildwithbook
+platform: x
+purpose: brand
+name: buildwithbook
+status: planned
+face_visible: false
+privacy: public
+display_name: buildwithbook
+topic: Build-in-public and project breakdowns
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

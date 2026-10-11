@@ -1,0 +1,13 @@
+identity_layer: public-personal
+family_id: bookchaowalit-public
+platform: facebook
+purpose: personal
+name: bookchaowalit
+status: planned
+face_visible: true
+privacy: public
+display_name: bookchaowalit
+topic: Technology, knowledge, building-in-public, and finance education
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

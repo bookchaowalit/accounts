@@ -1,0 +1,45 @@
+identity_layer: private-personal
+family_id: bookchaowalit-private
+platform: line
+purpose: personal
+name: bookchaowalit-private
+status: needs-verification
+face_visible: true
+privacy: private
+display_name: bookchaowalit-private
+handle: ""
+public_url: ""
+bio: ""
+topic: Private personal relationships and communication
+content_pillars: []
+cta:
+  label: ""
+  target_type: none
+  target_ref: ""
+  notes: Private human LINE only; business traffic goes to line/business/solo-empire.
+posting_frequency: ""
+related_ventures: []
+related_projects: []
+conversion_path: []
+launch_priority: 1
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track: []
+  log_path: ""
+verification:
+  ownership_confirmed: false
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence: []
+  blockers:
+    - Confirm ownership and recovery outside Git; do not record private LINE IDs here.
+notes: >-
+  Private personal LINE. Business and lead routing must use the Solo Empire
+  Official Account, not this identity.

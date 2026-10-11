@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: book-daily
+platform: instagram
+purpose: brand
+name: book-daily
+status: planned
+face_visible: false
+privacy: public
+display_name: book-daily
+topic: Faceless lifestyle, desk, coffee, and art
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

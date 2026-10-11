@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: notification-bot-and-groups
+platform: telegram
+purpose: community
+name: notification-bot-and-groups
+status: active
+face_visible: false
+privacy: public
+display_name: notification-bot-and-groups
+topic: System notifications and category groups
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

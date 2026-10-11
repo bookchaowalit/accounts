@@ -1,0 +1,55 @@
+identity_layer: public-personal
+family_id: bookchaowalit-public
+platform: website
+purpose: personal
+name: bookchaowalit
+status: active
+face_visible: true
+privacy: public
+display_name: bookchaowalit
+handle: ""
+public_url: ""
+profile_photo_ref: bookchaowalit-public-headshot
+bio: |
+  Portfolio, personal brand, and public proof for Chaowalit Greepoke (Book).
+  AI, software, and business-building work.
+topic: Portfolio, personal brand, and public proof
+content_pillars:
+  - AI and software development
+  - Building products and the Solo Empire journey
+  - Case studies and technical proof
+cta:
+  label: Contact / hire
+  target_type: email
+  target_ref: ""
+  notes: Record public site URL once verified; do not put private contact plumbing in Git beyond public pages.
+posting_frequency: as-needed
+related_ventures: []
+related_projects: []
+conversion_path:
+  - website
+  - email_or_line_oa
+  - offer
+launch_priority: 2
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - engagement
+    - leads
+  log_path: ""
+verification:
+  ownership_confirmed: true
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence:
+    - docs/governance/PERSONAL-DATA-POLICY.md
+  blockers:
+    - Confirm canonical public website URL and contact CTA.
+notes: Non-secret metadata only; store credentials outside this repository.

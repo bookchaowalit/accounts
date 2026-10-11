@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: artbybook
+platform: instagram
+purpose: brand
+name: artbybook
+status: planned
+face_visible: false
+privacy: public
+display_name: artbybook
+topic: Art styles, interpretation, prints, and guides
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: studywithbook
+platform: instagram
+purpose: brand
+name: studywithbook
+status: planned
+face_visible: false
+privacy: public
+display_name: studywithbook
+topic: Study-with-me, desks, and productivity
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: code-coffee-repeat
+platform: x
+purpose: brand
+name: code-coffee-repeat
+status: planned
+face_visible: false
+privacy: public
+display_name: code-coffee-repeat
+topic: Developer humor, tips, and freelance leads
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

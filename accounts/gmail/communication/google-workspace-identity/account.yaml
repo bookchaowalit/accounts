@@ -1,0 +1,13 @@
+identity_layer: public-personal
+family_id: google-workspace-identity
+platform: gmail
+purpose: communication
+name: google-workspace-identity
+status: active
+face_visible: true
+privacy: public
+display_name: google-workspace-identity
+topic: Outreach, operations, and email infrastructure
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

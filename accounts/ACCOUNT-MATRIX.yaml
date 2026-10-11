@@ -1,0 +1,220 @@
+version: 1
+updated: '2026-08-02'
+description: >-
+  Non-secret inventory of account families and platform identities. A planned
+  row is an intended account slot, not proof that the external account exists.
+
+status_definitions:
+  active: Configured and available for normal operation.
+  setup: Configuration or credentials are being prepared.
+  planned: Intended but not confirmed as created.
+  needs-verification: Platform use is documented but exact account or handle is unconfirmed.
+  paused: Intentionally disabled while its record is retained.
+  retired: No longer used; historical record retained.
+
+identity_layers:
+  - id: private-personal
+    display_name: Private personal
+    face_visible: true
+    privacy: private
+    purpose: Real-life relationships and private communication
+    platforms:
+      - platform: google
+        purpose: personal
+        name: bookchaowalit-private
+        status: active
+      - platform: facebook
+        purpose: personal
+        name: bookchaowalit-private
+        status: needs-verification
+      - platform: instagram
+        purpose: personal
+        name: bookchaowalit-private
+        status: needs-verification
+      - platform: line
+        purpose: personal
+        name: bookchaowalit-private
+        status: needs-verification
+
+  - id: public-personal
+    display_name: bookchaowalit public identity
+    face_visible: true
+    privacy: public
+    purpose: AI, technology, knowledge, business building, and finance education
+    platforms:
+      - platform: linkedin
+        purpose: personal
+        name: bookchaowalit
+        status: active
+        evidence: docs/governance/PERSONAL-DATA-POLICY.md; dashboard/TOOLS-REGISTRY.md
+      - platform: instagram
+        purpose: personal
+        name: bookchaowalit
+        status: planned
+      - platform: tiktok
+        purpose: personal
+        name: bookchaowalit
+        status: planned
+      - platform: x
+        purpose: personal
+        name: bookchaowalit
+        status: planned
+      - platform: facebook
+        purpose: personal
+        name: bookchaowalit
+        status: planned
+      - platform: youtube
+        purpose: personal
+        name: bookchaowalit
+        status: planned
+      - platform: github
+        purpose: personal
+        name: bookchaowalit
+        status: active
+      - platform: website
+        purpose: personal
+        name: bookchaowalit
+        status: active
+
+faceless_brands:
+  - id: artbybook
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Art styles, interpretation, prints, and guides
+  - id: lineartbybook
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Minimal line art, SVGs, wall art, and tattoo designs
+  - id: sketch-daily
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Daily sketches and art challenges
+  - id: code-coffee-repeat
+    platforms: [instagram, tiktok, x]
+    status: planned
+    topic: Developer humor, tips, and freelance leads
+  - id: buildwithbook
+    platforms: [x, youtube]
+    status: planned
+    topic: Build-in-public and project breakdowns
+  - id: typetips-dev
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: TypeScript and JavaScript education
+  - id: hustle-solo
+    platforms: [instagram, tiktok, x]
+    status: planned
+    topic: Solo business lessons and digital products
+  - id: solo-empire
+    platforms: [instagram, x]
+    status: planned
+    topic: Operating system, tools, and workflows
+  - id: sidehustle-th
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Thai side-hustle education and affiliate content
+  - id: quote-daily
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Quote graphics and digital products
+  - id: quotesforher
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Quote products for women
+  - id: hustle-quotes
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Entrepreneur quote products
+  - id: brew-book
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Drink recipes and future drink-shop brand
+  - id: thaibrew-home
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Thai home brewing and affiliate content
+  - id: law-student-th
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Law study and exam preparation
+  - id: studywithbook
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Study-with-me, desks, and productivity
+  - id: ai-for-thai
+    platforms: [instagram, tiktok, linkedin]
+    status: planned
+    topic: Practical AI for Thai businesses
+    launch_priority: 1
+    related_ventures:
+      - opportunities/business/ai-services
+    conversion_path:
+      - linkedin
+      - landing_page_or_email
+      - line_oa
+      - ai_service_offer
+    notes: First faceless brand to launch; do not start other brands until 30-day metrics exist.
+  - id: agent-build
+    platforms: [x, youtube]
+    status: planned
+    topic: AI agents, MCP, RAG, and developer education
+  - id: book-daily
+    platforms: [instagram]
+    status: planned
+    topic: Faceless lifestyle, desk, coffee, and art
+  - id: bangkok-maker
+    platforms: [instagram, tiktok]
+    status: planned
+    topic: Bangkok creative and maker culture
+
+existing_platform_records:
+  - platform: facebook
+    name: ai-sme-page
+    purpose: business
+    face_visible: false
+    status: needs-verification
+    evidence: dashboard/TOOLS-REGISTRY.md
+  - platform: facebook
+    name: web-dev-page
+    purpose: business
+    face_visible: false
+    status: needs-verification
+    evidence: dashboard/TOOLS-REGISTRY.md
+  - platform: line
+    name: solo-empire
+    purpose: business
+    face_visible: false
+    status: planned
+    path: accounts/line/business/solo-empire/
+  - platform: discord
+    name: workspace-identity
+    purpose: community
+    status: active
+  - platform: telegram
+    name: notification-bot-and-groups
+    purpose: community
+    status: active
+  - platform: slack
+    name: workspace-identity
+    purpose: communication
+    status: active
+  - platform: gmail
+    name: google-workspace-identity
+    purpose: communication
+    status: active
+  - platform: etsy
+    name: bookchaowalit
+    purpose: business
+    status: active
+    related_venture: etsy
+  - platform: fastwork
+    name: pixiu-watch
+    purpose: business
+    status: active
+    related_venture: freelance-seo
+
+anonymous_identities:
+  isolation_required: true
+  tracked_in_git: false
+  note: Z3 personas live only in their own private vault, never in this file.
+

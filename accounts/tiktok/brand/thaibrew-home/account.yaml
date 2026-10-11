@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: thaibrew-home
+platform: tiktok
+purpose: brand
+name: thaibrew-home
+status: planned
+face_visible: false
+privacy: public
+display_name: thaibrew-home
+topic: Thai home brewing and affiliate content
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

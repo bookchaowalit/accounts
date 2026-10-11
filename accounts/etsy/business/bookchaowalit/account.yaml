@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: bookchaowalit-etsy
+platform: etsy
+purpose: business
+name: bookchaowalit
+status: active
+face_visible: false
+privacy: public
+display_name: bookchaowalit
+topic: SVG/PNG digital product sales
+related_ventures: [etsy]
+notes: Non-secret metadata only; store credentials outside this repository.
+

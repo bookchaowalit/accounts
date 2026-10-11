@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: lineartbybook
+platform: instagram
+purpose: brand
+name: lineartbybook
+status: planned
+face_visible: false
+privacy: public
+display_name: lineartbybook
+topic: Minimal line art, SVGs, wall art, and tattoo designs
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

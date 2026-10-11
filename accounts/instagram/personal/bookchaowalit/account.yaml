@@ -1,0 +1,61 @@
+identity_layer: public-personal
+family_id: bookchaowalit-public
+platform: instagram
+purpose: personal
+name: bookchaowalit
+status: planned
+face_visible: true
+privacy: public
+display_name: bookchaowalit
+handle: bookchaowalit
+public_url: ""
+profile_photo_ref: bookchaowalit-public-headshot
+bio: |
+  AI · software · building in public
+  Bangkok | Solo Empire
+  Knowledge + systems + finance education
+  ↓ next CTA when funnel is live
+topic: Technology, knowledge, building-in-public, and finance education
+content_pillars:
+  - AI and software development
+  - Building products and the Solo Empire journey
+  - Knowledge, productivity, and systems
+  - Personal finance education without individualized advice
+cta:
+  label: Link in bio
+  target_type: landing_page
+  target_ref: ""
+  notes: Reserve handle first; set CTA only after landing page or email capture exists.
+posting_frequency: 3-5x/week after launch
+related_ventures: []
+related_projects: []
+conversion_path:
+  - instagram
+  - landing_page_or_email
+  - line_oa
+  - offer
+launch_priority: 2
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track:
+    - followers
+    - engagement
+    - leads
+    - sales
+  log_path: ""
+verification:
+  ownership_confirmed: false
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence: []
+  blockers:
+    - Reserve @bookchaowalit (or closest available) with public identity email.
+    - Match name, photo, and bio themes to LinkedIn public family.
+notes: Non-secret metadata only; store credentials outside this repository.

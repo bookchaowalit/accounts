@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: agent-build
+platform: x
+purpose: brand
+name: agent-build
+status: planned
+face_visible: false
+privacy: public
+display_name: agent-build
+topic: AI agents, MCP, RAG, and developer education
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

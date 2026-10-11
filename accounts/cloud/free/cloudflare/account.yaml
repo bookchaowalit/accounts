@@ -1,0 +1,25 @@
+provider: cloudflare
+account_name: bookchaowalit
+status: active
+plan_type: free-quota
+purpose: portfolio-data-lake
+source_of_truth: false
+budget_guard: hard_stop
+monthly_budget_usd: 0
+review_on: 2026-09-07
+account_id: 98e152b05e32b75612ee03e955913ee2
+resources:
+  r2_bucket: solo-empire-portfolio
+  s3_endpoint: https://98e152b05e32b75612ee03e955913ee2.r2.cloudflarestorage.com
+  data_lake_uri: s3://solo-empire-portfolio/portfolio-demo/free-cloud-e2e-001
+  r2_catalog_status: active
+  r2_catalog_uri: https://catalog.cloudflarestorage.com/98e152b05e32b75612ee03e955913ee2/solo-empire-portfolio
+  r2_warehouse: 98e152b05e32b75612ee03e955913ee2_solo-empire-portfolio
+  portfolio_prefix: portfolio-demo/free-cloud-e2e-001
+credentials_location: infisical://solo-empire/cloudflare
+credential_refs:
+  - DATA_LAKE_S3_ENDPOINT
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - ICEBERG_CATALOG_TOKEN
+notes: Non-secret metadata only. R2 Data Catalog is an open-beta dependency; verify current terms before production use.

@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: solo-empire
+platform: x
+purpose: brand
+name: solo-empire
+status: planned
+face_visible: false
+privacy: public
+display_name: solo-empire
+topic: Solo Empire operating system, tools, and workflows
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+

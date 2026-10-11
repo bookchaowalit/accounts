@@ -1,0 +1,45 @@
+identity_layer: private-personal
+family_id: bookchaowalit-private
+platform: facebook
+purpose: personal
+name: bookchaowalit-private
+status: needs-verification
+face_visible: true
+privacy: private
+display_name: bookchaowalit-private
+handle: ""
+public_url: ""
+bio: ""
+topic: Private personal relationships and communication
+content_pillars: []
+cta:
+  label: ""
+  target_type: none
+  target_ref: ""
+  notes: Private identity; not used for marketing CTAs.
+posting_frequency: ""
+related_ventures: []
+related_projects: []
+conversion_path: []
+launch_priority: 1
+metrics_tracking:
+  enabled: false
+  window_days: 30
+  track: []
+  log_path: ""
+verification:
+  ownership_confirmed: false
+  handle_reserved: false
+  profile_complete: false
+  bio_and_cta_set: false
+  photo_aligned: false
+  conversion_path_linked: false
+  credentials_stored_outside_git: false
+  last_verified_at: ""
+  verified_by: ""
+  evidence: []
+  blockers:
+    - Confirm ownership and recovery outside Git; do not record private identifiers here.
+notes: >-
+  Private personal only. Never store private handles or credentials in Git.
+  Keep friends-and-family audience separate from public personal accounts.

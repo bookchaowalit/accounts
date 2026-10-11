@@ -1,0 +1,13 @@
+identity_layer: faceless-brand
+family_id: workspace-identity
+platform: discord
+purpose: community
+name: workspace-identity
+status: active
+face_visible: false
+privacy: public
+display_name: workspace-identity
+topic: Tech communities and networking
+related_ventures: []
+notes: Non-secret metadata only; store credentials outside this repository.
+
