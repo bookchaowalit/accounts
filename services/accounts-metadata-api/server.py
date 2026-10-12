@@ -62,7 +62,7 @@ def utc_now() -> str:
 
 
 def repository_root() -> Path:
-    # <solo-accounts>/services/accounts-metadata-api/server.py -> <solo-accounts>
+    # <accounts>/services/accounts-metadata-api/server.py -> <accounts>
     return Path(__file__).resolve().parents[2]
 
 

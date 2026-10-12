@@ -1,4 +1,4 @@
-# Build from the solo-accounts repository root: docker build -f services/accounts-metadata-api/Dockerfile -t solo-accounts-metadata-api .
+# Build from the accounts repository root: docker build -f services/accounts-metadata-api/Dockerfile -t solo-accounts-metadata-api .
 # Only the files declared in service.yaml data.reads are baked in; nothing else from the repo.
 FROM python:3.12-slim
 

@@ -1,11 +1,11 @@
-# accounts-metadata-api (in solo-accounts)
+# accounts-metadata-api (in accounts)
 
 Moved out of solo-empire `services/accounts-api` on 2026-10-11 with its history (subtree add). A
 read-only projection of the account matrix `accounts/ACCOUNT-MATRIX.yaml` for the Solo Web `/accounts`
 module. **The matrix is read from this repository's root `accounts/` folder** (the file moves here from
 solo-empire `accounts/`); override with `ACCOUNTS_API_MATRIX_PATH`. This service is separate from the
 accounts cell API in `src/` (Postgres). `vendor/service-auth` is a vendored copy of
-`bookchaowalit/solo-service-auth`.
+`bookchaowalit/service-auth`.
 
 Test: `PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m unittest discover -s services/accounts-metadata-api/tests -v`
 (the test against the real matrix is skipped until `accounts/ACCOUNT-MATRIX.yaml` exists here).
@@ -16,13 +16,13 @@ Test: `PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m 
 
 `accounts-api` is a small read-only backend that turns
 [`accounts/ACCOUNT-MATRIX.yaml`](../../accounts/ACCOUNT-MATRIX.yaml) into JSON
-for the `/accounts` module of [`solo-web`](../../projects/product/engineering/book-dev/github/bookchaowalit/private/solo-web/). The YAML
+for the `/accounts` module of [`solo-web`](../../projects/product/engineering/book-dev/github/bookchaowalit/private/owner-web/). The YAML
 file stays the source that humans and AI agents edit; the service only reads
 it and reloads when the file changes.
 
 ## Run
 
-From the solo-accounts repository root:
+From the accounts repository root:
 
 ```bash
 python3 -m pip install ./services/accounts-metadata-api/vendor/service-auth ./services/accounts-metadata-api
@@ -44,7 +44,7 @@ Anonymous identities are returned as counts only. See the
 ## Deploy
 
 This folder is an independent deploy unit described by [`service.yaml`](service.yaml).
-The solo-accounts repository root is the Docker build context (service + vendored `service-auth` + `accounts/ACCOUNT-MATRIX.yaml`).
+The accounts repository root is the Docker build context (service + vendored `service-auth` + `accounts/ACCOUNT-MATRIX.yaml`).
 
 ```bash
 docker build -f services/accounts-metadata-api/Dockerfile -t solo-accounts-metadata-api .
