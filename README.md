@@ -8,8 +8,8 @@ HTTP with the caller's token.
 
 | | |
 |---|---|
-| API | Railway project `solo-accounts`, service `accounts-api` (Serverless) |
-| Data | Neon project `solo-accounts`, database `accounts` |
+| API | Railway project `accounts`, service `accounts-api` (Serverless) |
+| Data | Neon project `accounts`, database `accounts` |
 | Web | `web/` (Next.js), Vercel project `solo-accounts-web`, owner-only sign-in |
 | Registry | solo-empire `repository-catalog/registries/online-systems.yaml` (`accounts`) |
 
