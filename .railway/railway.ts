@@ -11,8 +11,16 @@ export default defineRailway(() => {
     deploy: { sleepApplication: true },
   });
 
+  // accounts-metadata-api: read-only account metadata API for solo-web (service-JWT auth, ACCOUNTS_API_AUTH_* variables).
+  const metadata = service("accounts-metadata-api", {
+    build: { builder: "DOCKERFILE", dockerfilePath: "services/accounts-metadata-api/Dockerfile" },
+    healthcheck: "/ready",
+    healthcheckTimeout: 30,
+    deploy: { sleepApplication: true },
+  });
+
   return project("solo-accounts", {
     variables: { managed: false },
-    resources: [api],
+    resources: [api, metadata],
   });
 });
