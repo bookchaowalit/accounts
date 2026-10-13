@@ -1,5 +1,4 @@
-# accounts
-
+# platform-accounts-api
 The Accounts cell: its own API (Railway, serverless) and its own Neon
 database, described by `cell.yaml` and served by the code in `src/cellkit/`, which
 this repository owns. It
@@ -8,8 +7,8 @@ HTTP with the caller's token.
 
 | | |
 |---|---|
-| API | Railway project `accounts`, service `accounts-api` (Serverless) |
-| Data | Neon project `accounts`, database `accounts` |
+| API | Railway project `platform-accounts-api`, service `accounts-api` (Serverless) |
+| Data | Neon project `platform-accounts-api`, database `accounts` |
 | Web | `web/` (Next.js), Vercel project `solo-accounts-web`, owner-only sign-in |
 | Registry | solo-empire `repository-catalog/registries/online-systems.yaml` (`accounts`) |
 
