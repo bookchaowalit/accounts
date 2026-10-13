@@ -4,7 +4,7 @@
 # delegation inside that window). Touches no other automation. Never prints the token.
 set -euo pipefail
 here="$(cd "$(dirname "$0")/.." && pwd)"
-platform="${EMPIRE_PLATFORM_DIR:-$here/../platform-empire}"
+platform="${EMPIRE_PLATFORM_DIR:-$here/../empire-platform}"
 tokens="$HOME/.config/empire-platform/tokens"
 
 EMPIRE_DB_MODE=hosted "$platform/.venv/bin/empire-automations" provision --workspace owner --only accounts-web \

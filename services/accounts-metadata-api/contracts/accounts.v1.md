@@ -2,7 +2,7 @@
 
 `schema_version: solo-empire.accounts.v1`
 
-Read-only projection of [`accounts/ACCOUNT-MATRIX.yaml`](../../../platform-accounts-api/ACCOUNT-MATRIX.yaml) (in the accounts repository root).
+Read-only projection of [`accounts/ACCOUNT-MATRIX.yaml`](../../../accounts/ACCOUNT-MATRIX.yaml) (in the accounts repository root).
 The YAML file stays canonical; edit it, not the API.
 
 ## Routes

@@ -5,7 +5,7 @@ read-only projection of the account matrix `accounts/ACCOUNT-MATRIX.yaml` for th
 module. **The matrix is read from this repository's root `accounts/` folder** (the file moves here from
 solo-empire `accounts/`); override with `ACCOUNTS_API_MATRIX_PATH`. This service is separate from the
 accounts cell API in `src/` (Postgres). `vendor/service-auth` is a vendored copy of
-`bookchaowalit/platform-auth-sdk`.
+`bookchaowalit/service-auth`.
 
 Test: `PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m unittest discover -s services/accounts-metadata-api/tests -v`
 (the test against the real matrix is skipped until `accounts/ACCOUNT-MATRIX.yaml` exists here).
@@ -15,8 +15,8 @@ Test: `PYTHONPATH=services/accounts-metadata-api/vendor/service-auth python3 -m 
 # Solo Empire Accounts API
 
 `accounts-api` is a small read-only backend that turns
-[`accounts/ACCOUNT-MATRIX.yaml`](../../platform-accounts-api/ACCOUNT-MATRIX.yaml) into JSON
-for the `/accounts` module of [`solo-web`](../../projects/product/engineering/book-dev/github/bookchaowalit/private/life-dashboard-web/). The YAML
+[`accounts/ACCOUNT-MATRIX.yaml`](../../accounts/ACCOUNT-MATRIX.yaml) into JSON
+for the `/accounts` module of [`solo-web`](../../projects/product/engineering/book-dev/github/bookchaowalit/private/owner-web/). The YAML
 file stays the source that humans and AI agents edit; the service only reads
 it and reloads when the file changes.
 
