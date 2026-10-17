@@ -10,10 +10,6 @@ Needs ``<CELL>_PUBLISHER_TOKEN`` (a delegated automation token with
 
 from __future__ import annotations
 
-import argparse
-import json
-import os
-import sys
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
