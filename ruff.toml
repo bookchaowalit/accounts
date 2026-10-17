@@ -1,0 +1,8 @@
+# Ruff for platform-accounts-api (DevSecOps Phase 1). This repository starts on the classic core
+# rule set (pyflakes + pycodestyle errors). Ruff's wider default set (~37 findings, several of
+# which need behaviour review, e.g. FURB162 / BLE001 / B008) and `ruff format` (18 files,
+# ~3,400 changed lines) are a follow-up.
+target-version = "py312"
+
+[lint]
+select = ["E4", "E7", "E9", "F"]

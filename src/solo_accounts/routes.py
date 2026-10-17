@@ -39,7 +39,7 @@ def analyse(identities: list[dict], domains: list[dict], mailboxes: list[dict], 
             today: date | None = None) -> list[dict[str, Any]]:
     today = today or date.today()
     ident = {row["id"]: row for row in identities}
-    dom = {row["id"]: row for row in domains}
+    dom = {row["id"]: row for row in domains}  # noqa: F841 - unused, but building it raises KeyError on a domain row without an id; removing it changes behaviour
     mbox = {row["id"]: row for row in mailboxes}
     acct = {row["id"]: row for row in accounts}
     out: list[dict[str, Any]] = []
