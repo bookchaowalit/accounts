@@ -1,0 +1,51 @@
+# CI + security baseline (DevSecOps Phase 1). Public repository: GitHub-hosted runners.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  accounts-api:
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-python.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    with:
+      # The image runs 3.13, but the tests' embedded PostgreSQL (pgserver, dev extra) only ships
+      # wheels up to cp312. Move to 3.13 once pgserver does.
+      python-version: "3.12"
+      # `ruff format` would rewrite 18 files (~3,400 changed lines): a separate follow-up.
+      # `ruff check` (ruff.toml) still runs.
+      format-check: false
+
+  accounts-metadata-api:
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-python.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    with:
+      working-directory: services/accounts-metadata-api
+      python-version: "3.12" # matches the python:3.12-slim image
+      # Same install as the Dockerfile: the vendored service-auth package, then the service.
+      install-command: uv pip install ./vendor/service-auth .
+      format-check: false # see accounts-api; ruff.toml applies to the whole repository
+      # The service's unittest suite (README), then the vendored service-auth suite.
+      test-command: |
+        python -m unittest discover -s tests -v
+        (cd vendor/service-auth && python -m unittest discover -s tests -v)
+
+  web:
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-node.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    with:
+      working-directory: web
+      node-version: "22"
+      # No Biome/ESLint config yet: lint is skipped with a warning (follow-up).
+      # Typecheck (`typecheck` script), Vitest (`test` script) and the Next.js build run.
+      build-command: npm run build
+
+  security:
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/security.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
